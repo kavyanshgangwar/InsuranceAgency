@@ -32,6 +32,7 @@ public class UserRepositoryImpl implements UserRepository {
                 user.setPhoneNo(resultSet.getString("phone_no"));
                 user.setRole(resultSet.getString("role"));
                 user.setStatus(resultSet.getString("status"));
+                user.setPassword(resultSet.getString("password"));
                 return user;
             }
         });
