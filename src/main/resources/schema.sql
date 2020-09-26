@@ -4,6 +4,7 @@ create table user(
     last_name varchar(255) NOT NULL,
     email varchar(255) NOT NULL,
     phone_no varchar(13) NOT NULL,
+    password varchar(1000) NOT NULL,
     status varchar(14) NOT NULL,
     role varchar(100) NOT NULL,
     PRIMARY KEY (id)

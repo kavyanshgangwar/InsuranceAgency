@@ -8,6 +8,15 @@ public class User {
     private String phoneNo;
     private String status;
     private String role;
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public int getId() {
         return id;
