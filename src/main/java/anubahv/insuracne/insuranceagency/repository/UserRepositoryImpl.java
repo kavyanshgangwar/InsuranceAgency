@@ -57,7 +57,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void enableUser(User user) {
-        String query = "update user set status = verified where email='"+user.getEmail()+"'";
+        String query = "update user set status = 'verified' where email='"+user.getEmail()+"'";
         jdbcTemplate.update(query);
     }
 

@@ -48,7 +48,6 @@ public class RegistrationController {
         }catch (Exception re) {
             re.printStackTrace();
         }
-        securityService.autoLogin(user.getEmail(),user.getPassword());
         return "redirect:/welcome";
     }
 
@@ -64,12 +63,7 @@ public class RegistrationController {
             return "redirect:/access-denied";
         }
         userService.enableRegisteredUser(user);
-        return "/login";
+        return "redirect:/login";
     }
 
-    @RequestMapping("/welcome")
-    public String welcome(Principal principal, Model model){
-        model.addAttribute("username",securityService.findLoggedInUsername());
-        return "welcome";
-    }
 }

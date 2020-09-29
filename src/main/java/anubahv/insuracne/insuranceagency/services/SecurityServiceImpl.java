@@ -19,6 +19,11 @@ public class SecurityServiceImpl implements SecurityService {
     }
 
     @Override
+    public void notVerified() {
+        SecurityContextHolder.clearContext();
+    }
+
+    @Override
     public String findLoggedInUsername() {
         Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(userDetails instanceof UserDetails) {
