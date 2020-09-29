@@ -42,7 +42,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/","/login","/logout").permitAll();
         http.authorizeRequests().antMatchers("/self","/self/**").access("hasAuthority('client')");
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
-        http.authorizeRequests().and().formLogin().loginProcessingUrl("/login")
+        http.authorizeRequests().and().formLogin().loginPage("/login")
                 .defaultSuccessUrl("/welcome",true).failureUrl("/login?error=true").usernameParameter("email")
                 .passwordParameter("password").and().logout().logoutUrl("/logout").logoutSuccessUrl("/");
     }
