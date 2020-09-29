@@ -54,4 +54,30 @@ public class UserRepositoryImpl implements UserRepository {
         String query = "insert into user(first_name,last_name,email,phone_no,password,status,role) values(?,?,?,?,?,?,?)";
         jdbcTemplate.update(query,user.getFirstName(),user.getLastName(),user.getEmail(),user.getPhoneNo(),user.getPassword(),user.getStatus(),user.getRole());
     }
+
+    @Override
+    public void enableUser(User user) {
+        String query = "update user set status = verified where email='"+user.getEmail()+"'";
+        jdbcTemplate.update(query);
+    }
+
+    @Override
+    public User findByUserId(int id) {
+        String query = "select * from user where id='"+id+"'";
+        return jdbcTemplate.queryForObject(query, new RowMapper<User>() {
+            @Override
+            public User mapRow(ResultSet resultSet, int i) throws SQLException {
+                User user = new User();
+                user.setId(resultSet.getInt("id"));
+                user.setFirstName(resultSet.getString("first_name"));
+                user.setLastName(resultSet.getString("last_name"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPhoneNo(resultSet.getString("phone_no"));
+                user.setRole(resultSet.getString("role"));
+                user.setStatus(resultSet.getString("status"));
+                user.setPassword(resultSet.getString("password"));
+                return user;
+            }
+        });
+    }
 }
