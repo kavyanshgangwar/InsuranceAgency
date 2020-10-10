@@ -19,3 +19,14 @@ create table verification_token(
   PRIMARY KEY (id),
   foreign key (user_id) references user(id)
 );
+
+create table policy(
+    id int NOT NULL AUTO_INCREMENT,
+    name varchar(100) NOT NULL,
+    category varchar(10) NOT NULL,
+    premium int NOT NULL,
+    max_claim_amount int NOT NULL,
+    things_covered longtext NOT NULL,
+    expiration_status varchar(15) NOT NULL,
+    primary key (id)
+);
