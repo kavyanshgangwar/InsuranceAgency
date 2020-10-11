@@ -38,3 +38,14 @@ create table faq(
     on_topic varchar(15) NOT NULL,
     primary key (id)
 );
+
+create table policy_record(
+    id int NOT NULL AUTO_INCREMENT,
+    policy int NOT NULL,
+    user_id int NOT NULL,
+    expiry_date date NOT NULL,
+    status varchar(15) NOT NULL,
+    PRIMARY KEY (id),
+    foreign key (policy) references policy(id),
+    foreign key (user_id) references user(id)
+);
