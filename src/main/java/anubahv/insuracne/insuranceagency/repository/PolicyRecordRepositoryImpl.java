@@ -66,7 +66,7 @@ public class PolicyRecordRepositoryImpl implements PolicyRecordRepository {
 
     @Override
     public List<PolicyRecord> findAllOfUserOfCategory(int userId, String category) {
-        String sqlQuery = "select * from policy_record as pr where user_id = '"+userId+"' and exists (select * from policy where id=pr.policy and category = '"+category+"')";
+        String sqlQuery = "select pr.* from policy_record pr,policy p where p.id=pr.policy and pr.user_id = '"+userId+"' and p.category = '"+category+"'";
         List<PolicyRecord> policyRecords = jdbcTemplate.query(sqlQuery,policyRecordRowMapper);
         return policyRecords;
     }
