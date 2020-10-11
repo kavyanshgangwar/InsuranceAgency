@@ -30,3 +30,11 @@ create table policy(
     expiration_status varchar(15) NOT NULL,
     primary key (id)
 );
+
+create table faq(
+    id int NOT NULL AUTO_INCREMENT,
+    question text NOT NULL ,
+    answer LONGTEXT NOT NULL ,
+    on_topic varchar(15) NOT NULL,
+    primary key (id)
+);
