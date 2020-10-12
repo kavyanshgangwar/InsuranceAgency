@@ -8,5 +8,6 @@
 <h1 th:text="${policy.getName()}">sample</h1>
 <p th:text="${policy.getThingsCovered()}">this is place where details of policy are put.</p>
 <p th:text="${policy.getPremium()}">sample</p>
+<a th:href="@{/policy/{id}/buy(id=${policy.getId()})}">buy now</a>
 </body>
 </html>

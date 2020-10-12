@@ -1,6 +1,8 @@
 package anubahv.insuracne.insuranceagency.controllers;
 
+import anubahv.insuracne.insuranceagency.models.Policy;
 import anubahv.insuracne.insuranceagency.services.PolicyService;
+import anubahv.insuracne.insuranceagency.services.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PolicyController {
 
     PolicyService policyService;
+    SecurityService securityService;
 
     @Autowired
-    public PolicyController(PolicyService policyService) {
+    public PolicyController(PolicyService policyService,SecurityService securityService) {
         this.policyService = policyService;
+        this.securityService = securityService;
     }
 
     @RequestMapping({"","/"})
@@ -54,5 +58,15 @@ public class PolicyController {
     public String policyDetails(@PathVariable("id") int id, Model model){
         model.addAttribute("policy",policyService.findById(id));
         return "policy/policyDetails";
+    }
+
+    @RequestMapping({"/{id}/buy"})
+    public String buyPolicy(@PathVariable("id") int id,Model model){
+        if(securityService.findLoggedInUsername()==null){
+            return "redirect:/login";
+        }
+        Policy policy = policyService.findById(id);
+        // make exclusive search for vehicle and implement check functionality
+        return "policy/buyPolicy";
     }
 }
