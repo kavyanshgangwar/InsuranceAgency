@@ -60,3 +60,15 @@ create table vehicle(
     foreign key (user) references user(id),
     foreign key (record_id) references policy_record(id)
 );
+
+create table property(
+    id int NOT NULL AUTO_INCREMENT,
+    name varchar(20) NOT NULL,
+    record_id int,
+    user int NOT NULL,
+    document varchar(100) NOT NULL,
+    primary key (id),
+    foreign key (user) references user(id),
+    foreign key (record_id) references policy_record(id)
+);
+
