@@ -49,3 +49,14 @@ create table policy_record(
     foreign key (policy) references policy(id),
     foreign key (user_id) references user(id)
 );
+
+create table vehicle(
+    id int NOT NULL AUTO_INCREMENT,
+    vehicle_number varchar(12) NOT NULL,
+    document varchar(100) NOT NULL,
+    record_id int,
+    user int NOT NULL,
+    PRIMARY KEY (id),
+    foreign key (user) references user(id),
+    foreign key (record_id) references policy_record(id)
+);
