@@ -26,7 +26,7 @@ public class VehicleRepositoryImpl implements VehicleRepository {
             vehicle.setUserId(resultSet.getInt("user"));
             return vehicle;
         }
-    }
+    };
 
     @Autowired
     public VehicleRepositoryImpl(JdbcTemplate jdbcTemplate) {
