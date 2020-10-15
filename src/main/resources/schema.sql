@@ -104,3 +104,23 @@ create table vehicle_claim_docs(
     PRIMARY KEY (id),
     foreign key (vehicle_claim_id) references vehicle_claims(id)
 );
+
+create table health_claims(
+   id int NOT NULL AUTO_INCREMENT,
+   damage int NOT NULL,
+   amount int NOT NULL,
+   status varchar(10) NOT NULL,
+   date_of_loss DATE NOT NULL,
+   record_id int NOT NULL,
+   primary key (id),
+   foreign key (record_id) references policy_record(id)
+);
+
+create table health_claim_docs(
+   id int NOT NULL AUTO_INCREMENT,
+   document varchar(100) NOT NULL,
+   health_claim_id int NOT NULL,
+   PRIMARY KEY (id),
+   foreign key (health_claim_id) references health_claims(id)
+);
+
