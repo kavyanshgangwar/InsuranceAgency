@@ -24,7 +24,7 @@ public class VehicleClaimsRepositoryImpl implements VehicleClaimsRepository {
             vehicleClaims.setDateOfLoss(resultSet.getDate("date_of_loss"));
             vehicleClaims.setVehicleId(resultSet.getInt("vehicle_id"));
             vehicleClaims.setRecordId(resultSet.getInt("record_id"));
-            return null;
+            return vehicleClaims;
         }
     };
 

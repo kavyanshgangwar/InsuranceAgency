@@ -24,7 +24,7 @@ public class HealthClaimRepositoryImpl implements HealthClaimRepository {
             healthClaim.setDateOfLoss(resultSet.getDate("date_of_loss"));
 
             healthClaim.setRecordId(resultSet.getInt("record_id"));
-            return null;
+            return healthClaim;
         }
     };
 
