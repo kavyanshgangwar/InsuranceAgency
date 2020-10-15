@@ -124,3 +124,23 @@ create table health_claim_docs(
    foreign key (health_claim_id) references health_claims(id)
 );
 
+create table property_claims(
+   id int NOT NULL AUTO_INCREMENT,
+   damage int NOT NULL,
+   amount int NOT NULL,
+   status varchar(10) NOT NULL,
+   date_of_loss DATE NOT NULL,
+   property_id int NOT NULL ,
+   record_id int NOT NULL,
+   primary key (id),
+   foreign key (property_id) references property(id),
+   foreign key (record_id) references policy_record(id)
+);
+
+create table property_claim_docs(
+    id int NOT NULL AUTO_INCREMENT,
+    document varchar(100) NOT NULL,
+    property_claim_id int NOT NULL,
+    PRIMARY KEY (id),
+    foreign key (property_claim_id) references property_claims(id)
+);
