@@ -72,3 +72,14 @@ create table property(
     foreign key (record_id) references policy_record(id)
 );
 
+create table transaction(
+    id int NOT NULL AUTO_INCREMENT,
+    type varchar(10) NOT NULL,
+    amount int NOT NULL,
+    receipt_no char(12) NOT NULL,
+    record_id int NOT NULL,
+    user_id int NOT NULL,
+    primary key (id),
+    foreign key (record_id) references policy_record(id),
+    foreign key (user_id) references user(id)
+);
