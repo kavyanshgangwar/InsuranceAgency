@@ -154,3 +154,15 @@ create table life_insurance_claims(
     primary key (id),
     foreign key (record_id) references policy_record(id)
 );
+
+create table past_claims(
+    record_id int NOT NULL,
+    first_name varchar(255) NOT NULL ,
+    last_name varchar(255) NOT NULL ,
+    email varchar(255)NOT NULL ,
+    amount int NOT NULL,
+    category char(1) NOT NULL,
+    date_of_claim date NOT NULL,
+    asset_details varchar(1000) NOT NULL,
+    PRIMARY KEY (record_id)
+);
