@@ -9,4 +9,5 @@ public interface UserRepository {
     public void save(User user);
     public void enableUser(User user);
     public User findByUserId(int id);
+    public void addRole(String role,String email);
 }

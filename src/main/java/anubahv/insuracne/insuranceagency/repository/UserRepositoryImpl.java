@@ -80,4 +80,10 @@ public class UserRepositoryImpl implements UserRepository {
             }
         });
     }
+
+    @Override
+    public void addRole(String role, String email) {
+        User user = findByEmail(email);
+        String sqlQuery = "update user set role = '"+role+" "+user.getRole()+"' where email='"+email+"'";
+    }
 }

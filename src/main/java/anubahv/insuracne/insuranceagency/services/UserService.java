@@ -11,4 +11,5 @@ public interface UserService {
     public void enableRegisteredUser(User user);
     public VerificationToken getVerificationToken(String token);
     public User findByUserId(int id);
+    public void assignRoleEmployee(String email);
 }

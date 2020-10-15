@@ -59,4 +59,9 @@ public class UserServiceImpl implements UserService {
     public User findByUserId(int id) {
         return userRepository.findByUserId(id);
     }
+
+    @Override
+    public void assignRoleEmployee(String email) {
+        userRepository.addRole("employee",email);
+    }
 }
