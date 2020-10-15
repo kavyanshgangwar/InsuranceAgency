@@ -144,3 +144,13 @@ create table property_claim_docs(
     PRIMARY KEY (id),
     foreign key (property_claim_id) references property_claims(id)
 );
+
+create table life_insurance_claims(
+    id int NOT NULL AUTO_INCREMENT,
+    death_certificate varchar(200) NOT NULL,
+    record_id int NOT NULL,
+    amount int NOT NULL,
+    status varchar(20) NOT NULL,
+    primary key (id),
+    foreign key (record_id) references policy_record(id)
+);
