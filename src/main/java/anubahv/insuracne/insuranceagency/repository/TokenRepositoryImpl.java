@@ -26,7 +26,7 @@ public class TokenRepositoryImpl implements TokenRepository {
         String query = "select * from verification_token where token = '"+token+"'";
         return jdbcTemplate.queryForObject(query, new RowMapper<VerificationToken>() {
             @Override
-            public VerificationToken mapRow(ResultSet resultSet, int i) throws SQLException {
+            public VerificationToken mapRow(ResultSet resultSet,int i) throws SQLException {
                 VerificationToken verificationToken = new VerificationToken();
                 verificationToken.setId(resultSet.getInt("id"));
                 verificationToken.setToken(resultSet.getString("token"));

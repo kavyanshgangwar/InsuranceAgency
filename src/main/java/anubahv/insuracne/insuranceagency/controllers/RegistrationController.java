@@ -40,6 +40,10 @@ public class RegistrationController {
 
     @PostMapping("/register")
     public String register(@ModelAttribute("user") User user, BindingResult result, WebRequest request,Model model){
+        if(userService.findByUsername(user.getEmail())!=null){
+            model.addAttribute("emailError","email already exists");
+            return "forward:/register";
+        };
         userService.save(user);
         User user1 = userService.findByUsername(user.getEmail());
         try {
@@ -48,19 +52,19 @@ public class RegistrationController {
         }catch (Exception re) {
             re.printStackTrace();
         }
-        return "redirect:/welcome";
+        return "redirect:/homepage";
     }
 
     @GetMapping("/confirmRegistration")
     public String confirmRegistration(WebRequest request, Model model, @RequestParam("token") String token){
         VerificationToken verificationToken = userService.getVerificationToken(token);
         if(verificationToken == null) {
-            return "redirect:/access-denied";
+            return "redirect:/403";
         }
         User user = verificationToken.getUser();
         Calendar calendar = Calendar.getInstance();
         if(verificationToken.getExpiryDate().getTime()-calendar.getTime().getTime()<=0){
-            return "redirect:/access-denied";
+            return "redirect:/403";
         }
         userService.enableRegisteredUser(user);
         return "redirect:/login";
