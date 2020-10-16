@@ -14,14 +14,14 @@
 
 <!-- navbar -->
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-theme1">
-    <a href="#" class="ml-2 pr-2 mr-4 quicksand navbar-brand font-weight-bold font-size-2">AiA</a>
+    <a th:href="@{/}" class="ml-2 pr-2 mr-4 quicksand navbar-brand font-weight-bold font-size-2">AiA</a>
     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" area-expanded="false" aria-label="Toggle navigation" name="button">
         <i class="fas fa-bars navbar-hamburger-icon"></i>
     </button>
     <div class="collapse navbar-collapse" id="navbarContent">
         <ul class="navbar-nav mr-auto ml-2">
             <li class="nav-item active  mr-3">
-                <a class="nav-link quicksand font-weight-bold text-white" href="#">Home</a>
+                <a class="nav-link quicksand font-weight-bold text-white" th:href="@{/}">Home</a>
             </li>
             <li class="nav-item mr-3">
                 <a class="nav-link quicksand font-weight-bold text-white" th:href="@{/policy}">Policies</a>
@@ -29,10 +29,10 @@
         </ul>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item ml-2 mr-2">
-                <a href="#" class="nav-link quicksand font-weight-bold text-white">Login</a>
+                <a th:href="@{/login}" class="nav-link quicksand font-weight-bold text-white">Login</a>
             </li>
             <li class="nav-item ml-2 mr-4">
-                <a href="#" class="nav-link quicksand font-weight-bold text-white">Register</a>
+                <a th:href="@{/register}" class="nav-link quicksand font-weight-bold text-white">Register</a>
             </li>
         </ul>
     </div>
@@ -71,7 +71,7 @@
         <div class="col col-lg-6 col-md-12 right-col px-5 py-5 col-xs-12">
             <p class="display-6 pb-2 pt-4">Since 1950, we are providing the insurance solution for our client’s and we are very successfull about the area.</p>
             <p class="about-us-content">It showed a lady fitted out with a fur hat and fur boa who sat upright, raising a heavy fur muff that covered the whole of her lower arm towards the viewer. Gregor then turned to look out</p>
-            <button type="button" href="#" name="button" class="btn no-outline custom-radius-border bg-theme1 font-weight-bold text-white py-2 px-4">More about us</button>
+            <a th:href="@{/contacts}"><button type="button" name="button" class="btn no-outline custom-radius-border bg-theme1 font-weight-bold text-white py-2 px-4">More about us</button></a>
         </div>
         <div class="col text-white col-lg-6 col-12 ">
             <div class="row">
@@ -172,7 +172,7 @@
             <h1 class="text-theme1 px-5 about-us-heading font-weight-bold">
                 +917014597890
             </h1>
-            <button type="button" href="#" class="btn no-outline custom-radius-border mx-5 text-white font-weight-bold bg-theme1 py-2 px-4" name="button">Contact with Us</button>
+            <a th:href="@{/contacts}"> <button type="button" class="btn no-outline custom-radius-border mx-5 text-white font-weight-bold bg-theme1 py-2 px-4" name="button">Contact with Us</button></a>
         </div>
         <div class="experience-image">
             <img th:src="@{/images/experience.jpg}" alt="" style="width:100%;" class="">

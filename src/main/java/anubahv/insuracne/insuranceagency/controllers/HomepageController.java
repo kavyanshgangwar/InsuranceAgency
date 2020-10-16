@@ -13,4 +13,9 @@ public class HomepageController {
     public String homepage(Model model){
         return "homepage";
     }
+
+    @RequestMapping("/contacts")
+    public  String contacts(Model model){
+        return "contacts";
+    }
 }
