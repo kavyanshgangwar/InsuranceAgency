@@ -20,19 +20,13 @@ public class UserProfileController {
         this.securityService =securityService;
     }
 
-    @RequestMapping("/self/{username}")
-    public String profilePage(@PathVariable("username") String username, Model model){
+    @RequestMapping("/self")
+    public String profilePage(Model model){
         String loggedInUserName = securityService.findLoggedInUsername();
         if(loggedInUserName==null){
             return "redirect:/login";
         }else{
-            if(loggedInUserName.equals(username)){
-                model.addAttribute("username",username);
-                return "profile/userprofile";
-            }else{
-                return "redirect:/403";
-            }
+            return "profile/userprofile";
         }
-
     }
 }

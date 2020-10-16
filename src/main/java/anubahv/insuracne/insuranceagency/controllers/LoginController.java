@@ -38,6 +38,6 @@ public class LoginController {
             return "forward:/homepage";
         }
         model.addAttribute("username",securityService.findLoggedInUsername());
-        return "welcome";
+        return "redirect:/self";
     }
 }
