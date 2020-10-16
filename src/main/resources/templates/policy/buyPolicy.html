@@ -1,10 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Buy Policy</title>
 </head>
 <body>
-this is where you buy policy.
+<a th:href="@{/}">AiA</a>
+<div th:if="${policy.getCategory() == 'vehicle'}">
+    <ul>
+        <li th:each="vehicle : ${vehicles}"><p th:text="${vehicle.getVehicleNumber()}"></p> </li>
+    </ul>
+</div>
+<div th:if="${policy.getCategory() == 'property'}">
+    <ul>
+        <li th:each="property : ${properties}"><p th:text="${property.getName()}"></p> </li>
+    </ul>
+</div>
+<div th:if="${onVehicle}">
+    <form th:action="@{/policy/{id}/buy(id=${policy.getId()})}" method="post" th:object="${onVehicle}">
+
+        <select th:field="*{id}">
+            <option th:each="vehicle: ${vehicles}" th:value="${vehicle.getId()}" th:text="${vehicle.getVehicleNumber()}"></option>
+        </select>
+        <input type="text" placeholder="card number" required>
+        <input type="text" placeholder="cvv" required>
+        <input type="date" placeholder="expiry date" required>
+        <input type="submit" placeholder="submit">
+    </form>
+</div>
+<div th:if="${onProperty}">
+    <form th:action="@{/policy/{id}/buy(id=${policy.getId()})}" method="post" th:object="${onProperty}">
+
+        <select th:field="*{id}" required>
+            <option th:each="property : ${properties}" th:value="${property.getId()}" th:text="${property.getName()}"></option>
+        </select>
+        <input type="text" placeholder="card number" required>
+        <input type="text" placeholder="cvv" required>
+        <input type="date" placeholder="expiry date" required>
+        <input type="submit" placeholder="submit">
+    </form>
+</div>
+<div th:unless="${onProperty} or ${onVehicle}">
+    <form th:action="@{/policy/{id}/buy(id=${policy.getId()})}" method="post" >
+
+        <input type="text" placeholder="card number" required>
+        <input type="text" placeholder="cvv" required>
+        <input type="date" placeholder="expiry date" required>
+        <input type="submit" placeholder="submit">
+    </form>
+</div>
 </body>
 </html>

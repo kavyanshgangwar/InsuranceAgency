@@ -12,4 +12,5 @@ public interface VehicleService {
     public void addVehicle(Vehicle vehicle);
     public void changeRecord(int recordId,int id);
     public void delete(int id);
+    public List<Vehicle> getVehicleForBuyingPolicy(int userId);
 }

@@ -46,6 +46,12 @@ public class PolicyRecordRepositoryImpl implements PolicyRecordRepository {
     }
 
     @Override
+    public PolicyRecord getPolicyRecord(int userId, int policyId) {
+        String sqlQuery = "select * from policy_record where user_id = '"+userId+"' and policy = '"+policyId+"'";
+        return jdbcTemplate.queryForObject(sqlQuery,policyRecordRowMapper);
+    }
+
+    @Override
     public void delete(int id) {
         String sqlQuery = "delete from policy_record where id='"+id+"'";
         jdbcTemplate.update(sqlQuery);

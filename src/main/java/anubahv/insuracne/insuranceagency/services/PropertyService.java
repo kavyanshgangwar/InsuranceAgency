@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface PropertyService {
     public List<Property> getByUser(int userId);
+    public List<Property> getByUserForBuyingPolicy(int userId);
     public Property getById(int id);
     public PolicyRecord getRecordOnProperty(int id);
     public void addProperty(Property property);

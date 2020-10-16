@@ -7,6 +7,7 @@ import anubahv.insuracne.insuranceagency.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.lang.model.type.NullType;
 import java.util.List;
 
 @Service
@@ -48,5 +49,10 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public void delete(int id) {
         vehicleRepository.delete(id);
+    }
+
+    @Override
+    public List<Vehicle> getVehicleForBuyingPolicy(int userId) {
+        return vehicleRepository.findByUserAndRecord(userId, 0);
     }
 }

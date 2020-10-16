@@ -3,10 +3,12 @@ package anubahv.insuracne.insuranceagency.services;
 import anubahv.insuracne.insuranceagency.models.PolicyRecord;
 import anubahv.insuracne.insuranceagency.repository.PolicyRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 
+@Service
 public class PolicyRecordServiceImpl implements PolicyRecordService {
     PolicyRecordRepository policyRecordRepository;
 
@@ -58,6 +60,11 @@ public class PolicyRecordServiceImpl implements PolicyRecordService {
     @Override
     public PolicyRecord getPolicyRecord(int id) {
         return policyRecordRepository.getPolicyRecord(id);
+    }
+
+    @Override
+    public PolicyRecord getPolicyRecord(int userId, int policyId) {
+        return policyRecordRepository.getPolicyRecord(userId,policyId);
     }
 
     @Override

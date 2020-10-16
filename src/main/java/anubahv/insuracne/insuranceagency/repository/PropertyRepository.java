@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface PropertyRepository {
     public List<Property> findByUser(int userId);
+    public List<Property> findByUSerAndRecord(int userId,int recordId);
     public Property findById(int id);
     public int findRecordOnProperty(int id);
     public void save(Property property);

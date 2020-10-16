@@ -15,5 +15,6 @@ public interface PolicyRecordService {
     public void changeExpiryDate(Date date,int id);
     public void addRecord(PolicyRecord policyRecord);
     public PolicyRecord getPolicyRecord(int id);
+    public PolicyRecord getPolicyRecord(int userId,int policyId);
     public void deleteRecord(int id);
 }

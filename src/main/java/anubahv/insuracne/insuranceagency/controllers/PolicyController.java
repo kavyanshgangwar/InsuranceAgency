@@ -1,28 +1,46 @@
 package anubahv.insuracne.insuranceagency.controllers;
 
-import anubahv.insuracne.insuranceagency.models.Policy;
+import anubahv.insuracne.insuranceagency.models.*;
 import anubahv.insuracne.insuranceagency.repository.FAQRepository;
-import anubahv.insuracne.insuranceagency.services.PolicyService;
-import anubahv.insuracne.insuranceagency.services.SecurityService;
+import anubahv.insuracne.insuranceagency.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
+
+import java.nio.charset.Charset;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 @Controller
 @RequestMapping({"/policy"})
 public class PolicyController {
 
+    TransactionService transactionService;
+    UserService userService;
+    VehicleService vehicleService;
+    PropertyService propertyService;
     PolicyService policyService;
     SecurityService securityService;
     FAQRepository faqRepository;
+    PolicyRecordService policyRecordService;
+    private int id;
+    private Model model;
 
     @Autowired
-    public PolicyController(PolicyService policyService,SecurityService securityService,FAQRepository faqRepository) {
-        this.faqRepository = faqRepository;
+    public PolicyController(TransactionService transactionService, UserService userService, VehicleService vehicleService, PropertyService propertyService, PolicyService policyService, SecurityService securityService, FAQRepository faqRepository, PolicyRecordService policyRecordService) {
+        this.transactionService = transactionService;
+        this.userService = userService;
+        this.vehicleService = vehicleService;
+        this.propertyService = propertyService;
         this.policyService = policyService;
         this.securityService = securityService;
+        this.faqRepository = faqRepository;
+        this.policyRecordService = policyRecordService;
     }
 
     @RequestMapping({"","/"})
@@ -67,13 +85,83 @@ public class PolicyController {
         return "policy/policyDetails";
     }
 
-    @RequestMapping({"/{id}/buy"})
+    @GetMapping({"/{id}/buy"})
     public String buyPolicy(@PathVariable("id") int id,Model model){
         if(securityService.findLoggedInUsername()==null){
             return "redirect:/login";
         }
+        User user = userService.findByUsername(securityService.findLoggedInUsername());
         Policy policy = policyService.findById(id);
+        model.addAttribute("policy",policy);
+
+        if(policy.getCategory().equals("life") || policy.getCategory().equals("health")){
+
+            return "policy/buyPolicy";
+        }else{
+            if(policy.getCategory().equals("vehicle")){
+                List<Vehicle> vehicles = vehicleService.getVehicleForBuyingPolicy(user.getId());
+                if(vehicles.size()==0){
+                    return "policy/cantBuy";
+                }
+                model.addAttribute("vehicles",vehicles);
+                model.addAttribute("onVehicle",new Vehicle());
+            }else{
+                List<Property> properties = propertyService.getByUserForBuyingPolicy(user.getId());
+                if( properties.size()==0){
+                    return "policy/cantBuy";
+                }
+                model.addAttribute("onProperty",new Property());
+                model.addAttribute("properties",properties);
+            }
+        }
         // make exclusive search for vehicle and implement check functionality
         return "policy/buyPolicy";
+    }
+
+    @PostMapping({"/{id}/buy"})
+    public String buyPolicyPost(@PathVariable("id") int id, Model model,@ModelAttribute Object object){
+        Policy policy = policyService.findById(id);
+        User user = userService.findByUsername(securityService.findLoggedInUsername());
+
+        // save the policy record
+        PolicyRecord policyRecord = new PolicyRecord();
+        policyRecord.setPolicyId(policy.getId());
+        policyRecord.setUserId(user.getId());
+        policyRecord.setStatus("active");
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.YEAR,1);
+        policyRecord.setExpiryDate(new Date(calendar.getTime().getTime()));
+        policyRecordService.addRecord(policyRecord);
+        policyRecord = policyRecordService.getPolicyRecord(user.getId(),policy.getId());
+
+        // save the transaction
+        Transaction transaction = new Transaction();
+        transaction.setUserId(user.getId());
+        transaction.setRecordId(policyRecord.getId());
+        transaction.setAmount(policy.getPremium());
+        transaction.setType("buy");
+        // generating receipt number
+        String alphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789" + "abcdefghijklmnopqrstuvxyz";
+        StringBuilder stringBuilder = new StringBuilder(12);
+        for(int i=0;i<12;i++){
+            int index = (int)(alphaNumericString.length()*Math.random());
+            stringBuilder.append(alphaNumericString.charAt(index));
+        }
+        String receiptNumber = stringBuilder.toString();
+        transaction.setReceiptNumber(receiptNumber);
+        transactionService.add(transaction);
+
+
+        // check for policy category and see if we have to add a reference
+        if(policy.getCategory().equals("vehicle")){
+            Vehicle vehicle = (Vehicle) object;
+            vehicleService.changeRecord(policyRecord.getId(),vehicle.getId());
+        }
+        if(policy.getCategory().equals("property")){
+            Property property = (Property) object;
+            propertyService.changeRecord(policyRecord.getId(),property.getId());
+        }
+        model.addAttribute("receiptId",receiptNumber);
+        return "policy/success";
     }
 }

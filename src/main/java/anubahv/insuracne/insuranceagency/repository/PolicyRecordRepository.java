@@ -8,6 +8,7 @@ import java.util.List;
 public interface PolicyRecordRepository {
     public void save(PolicyRecord policyRecord);
     public PolicyRecord getPolicyRecord(int id);
+    public PolicyRecord getPolicyRecord(int userId,int policyId);
     public void delete(int id);
     public void changeExpiryDate(Date date,int id);
     public List<PolicyRecord> findAllOfUser(int userId);

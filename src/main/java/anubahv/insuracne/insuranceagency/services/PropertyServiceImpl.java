@@ -26,6 +26,11 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
+    public List<Property> getByUserForBuyingPolicy(int userId) {
+        return propertyRepository.findByUSerAndRecord(userId,0);
+    }
+
+    @Override
     public Property getById(int id) {
         return propertyRepository.findById(id);
     }

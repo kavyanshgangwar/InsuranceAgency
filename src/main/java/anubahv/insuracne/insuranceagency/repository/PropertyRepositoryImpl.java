@@ -39,6 +39,18 @@ public class PropertyRepositoryImpl implements PropertyRepository {
     }
 
     @Override
+    public List<Property> findByUSerAndRecord(int userId, int recordId) {
+        String sqlQuery;
+        if(recordId==0){
+            sqlQuery="select * from property where user = '"+userId+"' and record_id = 'NULL'";
+        }else{
+            sqlQuery = "select * from property where user = '"+userId+"' and record_id = '"+recordId+"'";
+        }
+        List<Property> properties = jdbcTemplate.query(sqlQuery,propertyRowMapper);
+        return properties;
+    }
+
+    @Override
     public Property findById(int id) {
         String sqlQuery = "select * from property where id='"+id+"'";
         return jdbcTemplate.queryForObject(sqlQuery,propertyRowMapper);

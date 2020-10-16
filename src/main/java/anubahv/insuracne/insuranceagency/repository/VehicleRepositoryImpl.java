@@ -5,6 +5,7 @@ import anubahv.insuracne.insuranceagency.models.Vehicle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
@@ -36,6 +37,17 @@ public class VehicleRepositoryImpl implements VehicleRepository {
     @Override
     public List<Vehicle> findByUser(int userId) {
         String sqlQuery = "select * from vehicle where user = '"+userId+"'";
+        List<Vehicle> vehicles = jdbcTemplate.query(sqlQuery,vehicleRowMapper);
+        return vehicles;
+    }
+
+    @Override
+    public List<Vehicle> findByUserAndRecord(int userId, int record_id) {
+        String sqlQuery;
+        if(record_id!=0)
+            sqlQuery = "select * from vehicle where user='"+userId+"' and record_id = '"+record_id+"'";
+        else
+            sqlQuery = "select * from vehicle where user='"+userId+"' and record_id = 'NULL'";
         List<Vehicle> vehicles = jdbcTemplate.query(sqlQuery,vehicleRowMapper);
         return vehicles;
     }

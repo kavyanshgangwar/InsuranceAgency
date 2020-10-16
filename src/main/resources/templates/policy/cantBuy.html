@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cannot Buy Policy</title>
+</head>
+<body>
+<div th:if="${policy.getCategory() == 'vehicle'}">
+    All vehicles you have already have a insurance.
+</div>
+<div th:if="${policy.getCategory() == 'property'}">
+    All property you have already have a insurance.
+</div>
+</body>
+</html>
