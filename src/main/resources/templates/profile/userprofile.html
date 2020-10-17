@@ -3,9 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>Profile</title>
+    <link th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/homepage.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 </head>
-<body>
+<body class="quicksand">
+<div th:insert="homepage::navbar"></div>
+
+
 <h1>this is the profile page.</h1>
-<h2 th:text="${username}"></h2>
+<h2 th:text="${user.getFirstName()}"></h2>
+<h2 th:text="${user.getLastName()}"></h2>
+<h2 th:text="${user.getEmail()}"></h2>
+<h2 th:text="${user.getPhoneNo()}"></h2>
+
+<a th:href="@{/self}">profile</a>
+<a th:href="@{/self/vehicle}">vehicles</a>
+<a th:href="@{/self/property}">property</a>
+<a th:href="@{/self/policies}">bought policies</a>
+<a th:href="@{/self/activeclaims}">active claims</a>
+<a th:href="@{self/processedclaims}">processed claims</a>
+
+<!-- fontawesome script -->
+<script src="https://kit.fontawesome.com/1f4b1ad491.js" crossorigin="anonymous"></script>
+
+<!-- bootstrap script -->
+<script th:src="@{https://code.jquery.com/jquery-3.2.1.slim.min.js}" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js}" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js}" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 </body>
 </html>
