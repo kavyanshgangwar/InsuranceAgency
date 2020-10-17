@@ -1,6 +1,7 @@
 package anubahv.insuracne.insuranceagency.controllers;
 
 import anubahv.insuracne.insuranceagency.models.Property;
+import anubahv.insuracne.insuranceagency.models.Transaction;
 import anubahv.insuracne.insuranceagency.models.User;
 import anubahv.insuracne.insuranceagency.models.Vehicle;
 import anubahv.insuracne.insuranceagency.services.*;
@@ -24,9 +25,10 @@ public class UserProfileController {
     HealthClaimServices healthClaimServices;
     LifeInsuranceClaimService lifeInsuranceClaimService;
     StorageService storageService;
+    TransactionService transactionService;
 
     @Autowired
-    public UserProfileController(UserService userService, SecurityService securityService, PropertyService propertyService, VehicleService vehicleService, PolicyRecordService policyRecordService, PropertyClaimsServices propertyClaimsServices, VehicleClaimsService vehicleClaimsService, HealthClaimServices healthClaimServices, LifeInsuranceClaimService lifeInsuranceClaimService, StorageService storageService) {
+    public UserProfileController(UserService userService, SecurityService securityService, PropertyService propertyService, VehicleService vehicleService, PolicyRecordService policyRecordService, PropertyClaimsServices propertyClaimsServices, VehicleClaimsService vehicleClaimsService, HealthClaimServices healthClaimServices, LifeInsuranceClaimService lifeInsuranceClaimService, StorageService storageService, TransactionService transactionService) {
         this.userService = userService;
         this.securityService = securityService;
         this.propertyService = propertyService;
@@ -37,6 +39,7 @@ public class UserProfileController {
         this.healthClaimServices = healthClaimServices;
         this.lifeInsuranceClaimService = lifeInsuranceClaimService;
         this.storageService = storageService;
+        this.transactionService = transactionService;
     }
 
     @RequestMapping("/self")
@@ -139,5 +142,17 @@ public class UserProfileController {
         User user = userService.findByUsername(loggedInUserName);
         model.addAttribute("policies",policyRecordService.getAllOfUser(user.getId()));
         return "profile/policyRecords";
+    }
+
+    @RequestMapping("/self/transactions")
+    public String transactions(Model model){
+        String loggedInUserName = securityService.findLoggedInUsername();
+        if(loggedInUserName==null){
+            return "redirect:/login";
+        }
+        User user = userService.findByUsername(loggedInUserName);
+        List<Transaction> transactions = transactionService.getAllOfUser(user.getId());
+        model.addAttribute("transactions",transactions);
+        return "profile/transactions";
     }
 }
