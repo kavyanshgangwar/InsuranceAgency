@@ -102,4 +102,32 @@ public class UserProfileController {
         model.addAttribute("vehicles",vehicles);
         return "profile/vehicles";
     }
+
+    @GetMapping("/self/vehicle/add")
+    public String addVehicle(Model model){
+        String loggedInUserName = securityService.findLoggedInUsername();
+        if(loggedInUserName==null){
+            return "redirect:/login";
+        }
+        model.addAttribute("vehicle",new Vehicle());
+        return "profile/addVehicle";
+    }
+
+    @PostMapping("/self/vehicle/add")
+    public String addVehicle(@RequestParam("file")MultipartFile file,@ModelAttribute("vehicle")Vehicle vehicle,Model model){
+        String loggedInUserName = securityService.findLoggedInUsername();
+        if(loggedInUserName==null){
+            return "redirect:/login";
+        }
+        if(file.isEmpty() || vehicle.getVehicleNumber()==null){
+            model.addAttribute("link","/self/vehicle/add");
+            return "formFailure";
+        }
+        storageService.uploadFile(file,loggedInUserName,"vehicle/"+vehicle.getVehicleNumber());
+        User user = userService.findByUsername(loggedInUserName);
+        vehicle.setUserId(user.getId());
+        vehicle.setDocumentLocation(storageService.getUploadLocation(file,loggedInUserName,"vehilce/"+vehicle.getVehicleNumber()));
+        vehicleService.addVehicle(vehicle);
+        return "redirect:/self/vehicle";
+    }
 }

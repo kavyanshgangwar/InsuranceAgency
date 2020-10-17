@@ -67,7 +67,7 @@ public class VehicleRepositoryImpl implements VehicleRepository {
     @Override
     public void save(Vehicle vehicle) {
         String sqlQuery = "insert into vehicle(vehicle_number,document,record_id,user) values(?,?,?,?)";
-        jdbcTemplate.update(sqlQuery,vehicle.getVehicleNumber(),vehicle.getDocumentLocation(),vehicle.getRecordId(),vehicle.getUserId());
+        jdbcTemplate.update(sqlQuery,vehicle.getVehicleNumber(),vehicle.getDocumentLocation(),vehicle.getRecordId()==0?null:vehicle.getRecordId(),vehicle.getUserId());
     }
 
     @Override
