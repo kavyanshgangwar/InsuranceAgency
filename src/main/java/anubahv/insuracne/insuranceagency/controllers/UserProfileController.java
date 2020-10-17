@@ -2,6 +2,7 @@ package anubahv.insuracne.insuranceagency.controllers;
 
 import anubahv.insuracne.insuranceagency.models.Property;
 import anubahv.insuracne.insuranceagency.models.User;
+import anubahv.insuracne.insuranceagency.models.Vehicle;
 import anubahv.insuracne.insuranceagency.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -88,5 +89,17 @@ public class UserProfileController {
         property.setDocumentLocation(storageService.getUploadLocation(file,loggedInUserName,"property/"+property.getName()));
         propertyService.addProperty(property);
         return "redirect:/self/property";
+    }
+
+    @RequestMapping("/self/vehicle")
+    public String vehiclePage(Model model){
+        String loggedInUserName = securityService.findLoggedInUsername();
+        if(loggedInUserName==null){
+            return "redirect:/login";
+        }
+        User user = userService.findByUsername(loggedInUserName);
+        List<Vehicle> vehicles = vehicleService.getByUser(user.getId());
+        model.addAttribute("vehicles",vehicles);
+        return "profile/vehicles";
     }
 }
