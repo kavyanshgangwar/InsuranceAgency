@@ -5,12 +5,10 @@ import anubahv.insuracne.insuranceagency.models.User;
 import anubahv.insuracne.insuranceagency.models.Vehicle;
 import anubahv.insuracne.insuranceagency.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -27,6 +25,7 @@ public class UserProfileController {
     LifeInsuranceClaimService lifeInsuranceClaimService;
     StorageService storageService;
 
+    @Autowired
     public UserProfileController(UserService userService, SecurityService securityService, PropertyService propertyService, VehicleService vehicleService, PolicyRecordService policyRecordService, PropertyClaimsServices propertyClaimsServices, VehicleClaimsService vehicleClaimsService, HealthClaimServices healthClaimServices, LifeInsuranceClaimService lifeInsuranceClaimService, StorageService storageService) {
         this.userService = userService;
         this.securityService = securityService;
@@ -129,5 +128,16 @@ public class UserProfileController {
         vehicle.setDocumentLocation(storageService.getUploadLocation(file,loggedInUserName,"vehilce/"+vehicle.getVehicleNumber()));
         vehicleService.addVehicle(vehicle);
         return "redirect:/self/vehicle";
+    }
+
+    @RequestMapping("/self/policies")
+    public String policyRecords(Model model){
+        String loggedInUserName = securityService.findLoggedInUsername();
+        if(loggedInUserName==null){
+            return "redirect:/login";
+        }
+        User user = userService.findByUsername(loggedInUserName);
+        model.addAttribute("policies",policyRecordService.getAllOfUser(user.getId()));
+        return "profile/policyRecords";
     }
 }
