@@ -65,7 +65,7 @@ public class PropertyRepositoryImpl implements PropertyRepository {
     @Override
     public void save(Property property) {
         String sqlQuery = "insert into property(name,record_id,user,document) values(?,?,?,?)";
-        jdbcTemplate.update(sqlQuery,property.getName(),property.getRecordId(),property.getUserId(),property.getDocumentLocation());
+        jdbcTemplate.update(sqlQuery,property.getName(),property.getRecordId()==0?null:property.getRecordId(),property.getUserId(),property.getDocumentLocation());
     }
 
     @Override

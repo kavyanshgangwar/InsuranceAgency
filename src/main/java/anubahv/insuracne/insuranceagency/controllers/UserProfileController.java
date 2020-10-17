@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -22,9 +24,9 @@ public class UserProfileController {
     VehicleClaimsService vehicleClaimsService;
     HealthClaimServices healthClaimServices;
     LifeInsuranceClaimService lifeInsuranceClaimService;
+    StorageService storageService;
 
-    @Autowired
-    public UserProfileController(UserService userService, SecurityService securityService, PropertyService propertyService, VehicleService vehicleService, PolicyRecordService policyRecordService, PropertyClaimsServices propertyClaimsServices, VehicleClaimsService vehicleClaimsService, HealthClaimServices healthClaimServices, LifeInsuranceClaimService lifeInsuranceClaimService) {
+    public UserProfileController(UserService userService, SecurityService securityService, PropertyService propertyService, VehicleService vehicleService, PolicyRecordService policyRecordService, PropertyClaimsServices propertyClaimsServices, VehicleClaimsService vehicleClaimsService, HealthClaimServices healthClaimServices, LifeInsuranceClaimService lifeInsuranceClaimService, StorageService storageService) {
         this.userService = userService;
         this.securityService = securityService;
         this.propertyService = propertyService;
@@ -34,6 +36,7 @@ public class UserProfileController {
         this.vehicleClaimsService = vehicleClaimsService;
         this.healthClaimServices = healthClaimServices;
         this.lifeInsuranceClaimService = lifeInsuranceClaimService;
+        this.storageService = storageService;
     }
 
     @RequestMapping("/self")
@@ -57,5 +60,33 @@ public class UserProfileController {
         List<Property> properties = propertyService.getByUser(user.getId());
         model.addAttribute("properties",properties);
         return "profile/property";
+    }
+
+    @GetMapping({"/self/property/add"})
+    public String addProperty(Model model){
+        String loggedInUserName = securityService.findLoggedInUsername();
+        if(loggedInUserName==null){
+            return "redirect:/login";
+        }
+        model.addAttribute("property",new Property());
+        return "profile/addProperty";
+    }
+
+    @PostMapping("/self/property/add")
+    public String addProperty(@RequestParam("file")MultipartFile file,@ModelAttribute Property property,Model model){
+        String loggedInUserName = securityService.findLoggedInUsername();
+        if(loggedInUserName==null){
+            return "redirect:/login";
+        }
+        if(file.isEmpty() || property.getName()==null){
+            model.addAttribute("link","/self/property/add");
+            return "profile/formFailure";
+        }
+        storageService.uploadFile(file,loggedInUserName,"property/"+property.getName());
+        User user = userService.findByUsername(loggedInUserName);
+        property.setUserId(user.getId());
+        property.setDocumentLocation(storageService.getUploadLocation(file,loggedInUserName,"property/"+property.getName()));
+        propertyService.addProperty(property);
+        return "redirect:/self/property";
     }
 }

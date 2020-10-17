@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Property</title>
+    <title>Add Property</title>
     <link th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/homepage.css}">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -11,12 +11,13 @@
 <body class="quicksand">
 <div th:insert="homepage::navbar"></div>
 
-<ul>
+<form th:action="@{/self/property/add}" method="post" enctype="multipart/form-data">
+    <input type="text" th:field="*{property.name}" required>
+    <input type="file" name="file" required>
+    <input type="submit" value="submit">
+</form>
 
-    <li th:each="property : ${properties}"><span th:text="${property.getName()}"></span> </li>
-</ul>
-
-<a th:href="@{/self/property/add}">add property</a>
+<p th:if="${error}">bad input</p>
 <!-- fontawesome script -->
 <script src="https://kit.fontawesome.com/1f4b1ad491.js" crossorigin="anonymous"></script>
 
