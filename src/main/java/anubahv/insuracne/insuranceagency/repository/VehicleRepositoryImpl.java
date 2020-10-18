@@ -47,8 +47,10 @@ public class VehicleRepositoryImpl implements VehicleRepository {
         if(record_id!=0)
             sqlQuery = "select * from vehicle where user='"+userId+"' and record_id = '"+record_id+"'";
         else
-            sqlQuery = "select * from vehicle where user='"+userId+"' and record_id = 'NULL'";
+            sqlQuery = "select * from vehicle where user='"+userId+"' and record_id is null";
         List<Vehicle> vehicles = jdbcTemplate.query(sqlQuery,vehicleRowMapper);
+        System.out.println(vehicles.size());
+        System.out.println(userId);
         return vehicles;
     }
 
@@ -78,7 +80,7 @@ public class VehicleRepositoryImpl implements VehicleRepository {
 
     @Override
     public void changeRecord(int recordId, int id) {
-        String sqlQuery = "update vehicle set record_id="+recordId+"' where id='"+id+"'";
+        String sqlQuery = "update vehicle set record_id='"+recordId+"' where id='"+id+"'";
         jdbcTemplate.update(sqlQuery);
     }
 

@@ -119,7 +119,7 @@ public class PolicyController {
     }
 
     @PostMapping({"/{id}/buy"})
-    public String buyPolicyPost(@PathVariable("id") int id, Model model,@ModelAttribute Object object){
+    public String buyPolicyPost(@PathVariable("id") int id, Model model,@RequestParam("objectId") int objectId){
         Policy policy = policyService.findById(id);
         User user = userService.findByUsername(securityService.findLoggedInUsername());
 
@@ -154,12 +154,10 @@ public class PolicyController {
 
         // check for policy category and see if we have to add a reference
         if(policy.getCategory().equals("vehicle")){
-            Vehicle vehicle = (Vehicle) object;
-            vehicleService.changeRecord(policyRecord.getId(),vehicle.getId());
+            vehicleService.changeRecord(policyRecord.getId(),objectId);
         }
         if(policy.getCategory().equals("property")){
-            Property property = (Property) object;
-            propertyService.changeRecord(policyRecord.getId(),property.getId());
+            propertyService.changeRecord(policyRecord.getId(),objectId);
         }
         model.addAttribute("receiptId",receiptNumber);
         return "policy/success";

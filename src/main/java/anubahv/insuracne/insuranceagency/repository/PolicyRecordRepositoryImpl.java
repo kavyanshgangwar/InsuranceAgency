@@ -79,6 +79,7 @@ public class PolicyRecordRepositoryImpl implements PolicyRecordRepository {
 
     @Override
     public void changeStatus(String status,int id) {
+
         String sqlQuery = "update policy_record set status='"+status+"' where id='"+id+"'";
         jdbcTemplate.update(sqlQuery);
     }

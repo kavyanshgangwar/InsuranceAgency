@@ -146,7 +146,9 @@ public class ClaimsController {
         vehicleClaims.setStatus("active");
         List<String> docs = new ArrayList<>();
         docs.add(storageService.getUploadLocation(file,loggedInUserName,"claims/vehicle/"+id));
+        vehicleClaims.setLinkToDocuments(docs);
         vehicleClaimsService.add(vehicleClaims);
+        policyRecordService.changeStatus("claimed",policyRecord.getId());
         return "redirect:/self";
     }
 

@@ -50,7 +50,7 @@ public class VehicleClaimsRepositoryImpl implements VehicleClaimsRepository {
     @Override
     public void save(VehicleClaims vehicleClaims) {
         String sqlQuery = "insert into vehicle_claims(damage,amount,status,date_of_loss,vehicle_id,record_id) values(?,?,?,?,?,?)";
-        jdbcTemplate.update(sqlQuery);
+        jdbcTemplate.update(sqlQuery,vehicleClaims.getDamage(),vehicleClaims.getAmount(),vehicleClaims.getStatus(),vehicleClaims.getDateOfLoss(),vehicleClaims.getVehicleId(),vehicleClaims.getRecordId());
         String sqlQueryForId = "select id from vehicle_claims where vehicle_id = '"+vehicleClaims.getVehicleId()+"'";
         int id = jdbcTemplate.queryForObject(sqlQueryForId,Integer.class);
         String sqlQueryForDocs = "insert into vehicle_claim_docs(document,vehicle_claim_id) values(?,?)";

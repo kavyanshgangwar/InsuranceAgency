@@ -19,7 +19,7 @@
 <div th:if="${onVehicle}">
     <form th:action="@{/policy/{id}/buy(id=${policy.getId()})}" method="post" th:object="${onVehicle}">
 
-        <select th:field="*{id}">
+        <select name="objectId" required>
             <option th:each="vehicle: ${vehicles}" th:value="${vehicle.getId()}" th:text="${vehicle.getVehicleNumber()}"></option>
         </select>
         <input type="text" placeholder="card number" required>
@@ -31,7 +31,7 @@
 <div th:if="${onProperty}">
     <form th:action="@{/policy/{id}/buy(id=${policy.getId()})}" method="post" th:object="${onProperty}">
 
-        <select th:field="*{id}" required>
+        <select name="objectId" required>
             <option th:each="property : ${properties}" th:value="${property.getId()}" th:text="${property.getName()}"></option>
         </select>
         <input type="text" placeholder="card number" required>
