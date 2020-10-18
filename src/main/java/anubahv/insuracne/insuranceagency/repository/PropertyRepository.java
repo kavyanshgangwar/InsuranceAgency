@@ -8,6 +8,7 @@ public interface PropertyRepository {
     public List<Property> findByUser(int userId);
     public List<Property> findByUSerAndRecord(int userId,int recordId);
     public Property findById(int id);
+    public Property findByRecord(int recordId);
     public int findRecordOnProperty(int id);
     public void save(Property property);
     public void changeRecord(int recordId,int id);

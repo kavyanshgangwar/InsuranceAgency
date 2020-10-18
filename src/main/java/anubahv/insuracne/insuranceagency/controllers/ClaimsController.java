@@ -137,6 +137,7 @@ public class ClaimsController {
             vehicleClaims.setVehicleId(vehicle.getId());
         }catch (Exception e){
             //cannot find a valid vehicle cannot claim;
+            model.addAttribute("link","/self");
             return "profile/formFailure";
         }
         storageService.uploadFile(file,loggedInUserName,"claims/vehicle/"+id);
@@ -146,6 +147,60 @@ public class ClaimsController {
         List<String> docs = new ArrayList<>();
         docs.add(storageService.getUploadLocation(file,loggedInUserName,"claims/vehicle/"+id));
         vehicleClaimsService.add(vehicleClaims);
+        return "redirect:/self";
+    }
+
+    @GetMapping("/claims/property/{id}")
+    public String propertyClaim(@PathVariable("id")int id,Model model){
+        String loggedInUserName = securityService.findLoggedInUsername();
+        if(loggedInUserName==null){
+            return "redirect:/login";
+        }
+        PropertyClaim propertyClaim = new PropertyClaim();
+        propertyClaim.setRecordId(id);
+        model.addAttribute("propertyClaim",propertyClaim);
+        return "claims/propertyClaim";
+    }
+
+    @PostMapping("/claims/property/{id}")
+    public String propertyClaim(@PathVariable("id")int id,Model model,@RequestParam("date")String date,@RequestParam("file")MultipartFile file,@ModelAttribute("propertyClaim")PropertyClaim propertyClaim){
+        String loggedInUserName = securityService.findLoggedInUsername();
+        if(loggedInUserName==null){
+            return "redirect:/login";
+        }
+        User user = userService.findByUsername(loggedInUserName);
+        PolicyRecord policyRecord = policyRecordService.getPolicyRecord(id);
+        if(user.getId()!=policyRecord.getUserId()){
+            model.addAttribute("link","/self");
+            return "profile/formFailure";
+        }
+        Policy policy = policyService.findById(policyRecord.getPolicyId());
+        if(!policy.getCategory().equals("property")){
+            model.addAttribute("link","/self");
+            return "profile/formFailure";
+        }
+        try{
+            propertyClaim.setDateOfLoss(new SimpleDateFormat("yyyy-MM-dd").parse(date));
+        }catch (ParseException e){
+            e.printStackTrace();
+            model.addAttribute("link","/claims/property/"+id);
+            return "profile/formFailure";
+        }
+        try{
+            Property property = propertyService.getByRecord(policyRecord.getId());
+            propertyClaim.setPropertyId(property.getId());
+        }catch (Exception e){
+            e.printStackTrace();
+            model.addAttribute("link","/self");
+            return "profile/formFailure";
+        }
+        storageService.uploadFile(file,loggedInUserName,"claims/property/"+id);
+        propertyClaim.setRecordId(policyRecord.getId());
+        propertyClaim.setAmount(policy.getMaxClaimAmount());
+        List<String> docs = new ArrayList<>();
+        docs.add(storageService.getUploadLocation(file,loggedInUserName,"claims/property/"+id));
+        propertyClaim.setLinkToDocuments(docs);
+        propertyClaimsServices.add(propertyClaim);
         return "redirect:/self";
     }
 }

@@ -41,6 +41,11 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
+    public Property getByRecord(int recordId) {
+        return propertyRepository.findByRecord(recordId);
+    }
+
+    @Override
     public void addProperty(Property property) {
         property.setRecordId(0);
         propertyRepository.save(property);

@@ -63,6 +63,12 @@ public class PropertyRepositoryImpl implements PropertyRepository {
     }
 
     @Override
+    public Property findByRecord(int recordId) {
+        String sqlQuery = "select * from property where record_id='"+recordId+"'";
+        return jdbcTemplate.queryForObject(sqlQuery,propertyRowMapper);
+    }
+
+    @Override
     public void save(Property property) {
         String sqlQuery = "insert into property(name,record_id,user,document) values(?,?,?,?)";
         jdbcTemplate.update(sqlQuery,property.getName(),property.getRecordId()==0?null:property.getRecordId(),property.getUserId(),property.getDocumentLocation());
