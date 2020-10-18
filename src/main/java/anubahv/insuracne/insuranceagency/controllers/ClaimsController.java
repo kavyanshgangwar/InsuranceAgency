@@ -220,4 +220,48 @@ public class ClaimsController {
         policyRecordService.changeStatus("claimed",policyRecord.getId());
         return "redirect:/self";
     }
+
+    @GetMapping("/claims/life/{id}")
+    public String lifeInsuranceClaim(@PathVariable("id")int id, Model model){
+        String loggedInUserName = securityService.findLoggedInUsername();
+        if(loggedInUserName==null){
+            return "redirect:/login";
+        }
+        LifeInsuranceClaim lifeInsuranceClaim = new LifeInsuranceClaim();
+        lifeInsuranceClaim.setRecordId(id);
+        model.addAttribute("lifeInsuranceClaim",lifeInsuranceClaim);
+        return "claims/lifeInsuranceClaim";
+    }
+
+    @PostMapping("/claims/life/{id}")
+    public String lifeInsuranceClaim(@PathVariable("id")int id,Model model,@RequestParam("file") MultipartFile file){
+        String loggedInUserName = securityService.findLoggedInUsername();
+        if(loggedInUserName==null){
+            return "redirect:/login";
+        }
+        User user = userService.findByUsername(loggedInUserName);
+        PolicyRecord policyRecord = policyRecordService.getPolicyRecord(id);
+        if(user.getId()!=policyRecord.getUserId()){
+            model.addAttribute("link","/self");
+            return "profile/formFailure";
+        }
+        if(!policyRecord.getStatus().equals("active")){
+            model.addAttribute("link","/self");
+            return "profile/formFailure";
+        }
+        Policy policy = policyService.findById(policyRecord.getPolicyId());
+        if(!policy.getCategory().equals("life")){
+            model.addAttribute("link","/self");
+            return "profile/formFailure";
+        }
+        LifeInsuranceClaim lifeInsuranceClaim = new LifeInsuranceClaim();
+        lifeInsuranceClaim.setRecordId(id);
+        lifeInsuranceClaim.setStatus("active");
+        lifeInsuranceClaim.setAmount(policy.getMaxClaimAmount());
+        lifeInsuranceClaim.setDeathCertificateLocation(storageService.getUploadLocation(file,loggedInUserName,"claims/life/"+id));
+        storageService.uploadFile(file,loggedInUserName,"claims/life/"+id);
+        lifeInsuranceClaimService.add(lifeInsuranceClaim);
+        policyRecordService.changeStatus("claimed",policyRecord.getId());
+        return "redirect:/self";
+    }
 }

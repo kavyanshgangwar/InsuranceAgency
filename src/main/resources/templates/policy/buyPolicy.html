@@ -42,7 +42,7 @@
 </div>
 <div th:unless="${onProperty} or ${onVehicle}">
     <form th:action="@{/policy/{id}/buy(id=${policy.getId()})}" method="post" >
-
+        <input type="text" value="0" name="objectId" hidden>
         <input type="text" placeholder="card number" required>
         <input type="text" placeholder="cvv" required>
         <input type="date" placeholder="expiry date" required>
