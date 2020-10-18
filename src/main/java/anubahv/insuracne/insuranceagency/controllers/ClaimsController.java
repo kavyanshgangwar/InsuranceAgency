@@ -71,6 +71,10 @@ public class ClaimsController {
             model.addAttribute("link","/claims/health/"+id);
             return "profile/formFailure";
         }
+        if(!policyRecord.getStatus().equals("active")){
+            model.addAttribute("link","/self");
+            return "profile/formFailure";
+        }
         try {
             healthClaim.setDateOfLoss(new SimpleDateFormat("yyyy-MM-dd").parse(date));
         } catch (ParseException e) {
@@ -93,6 +97,7 @@ public class ClaimsController {
         docs.add(storageService.getUploadLocation(file,loggedInUserName,"claims/health/"+id));
         healthClaim.setLinkToDocuments(docs);
         healthClaimServices.add(healthClaim);
+        policyRecordService.changeStatus("claimed",policyRecord.getId());
         return "redirect:/self";
     }
 
@@ -118,6 +123,10 @@ public class ClaimsController {
         PolicyRecord policyRecord = policyRecordService.getPolicyRecord(id);
         if(policyRecord.getUserId()!=user.getId()){
             model.addAttribute("link","/claims/vehicle/"+id);
+            return "profile/formFailure";
+        }
+        if(!policyRecord.getStatus().equals("active")){
+            model.addAttribute("link","/self");
             return "profile/formFailure";
         }
         try{
@@ -178,6 +187,10 @@ public class ClaimsController {
         }
         Policy policy = policyService.findById(policyRecord.getPolicyId());
         if(!policy.getCategory().equals("property")){
+            model.addAttribute("link","/self");
+            return "profile/formFailure";
+        }
+        if(!policyRecord.getStatus().equals("active")){
             model.addAttribute("link","/self");
             return "profile/formFailure";
         }
