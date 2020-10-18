@@ -51,7 +51,7 @@ public class PropertyClaimsRepositoryImpl implements PropertyClaimsRepository {
     @Override
     public void save(PropertyClaim propertyClaim) {
         String sqlQuery = "insert into property_claims(damage,amount,status,date_of_loss,property_id,record_id) values(?,?,?,?,?,?)";
-        jdbcTemplate.update(sqlQuery);
+        jdbcTemplate.update(sqlQuery,propertyClaim.getDamage(),propertyClaim.getAmount(),propertyClaim.getStatus(),propertyClaim.getDateOfLoss(),propertyClaim.getPropertyId(),propertyClaim.getRecordId());
         String sqlQueryForId = "select id from property_claims where property_id = '"+propertyClaim.getPropertyId()+"'";
         int id = jdbcTemplate.queryForObject(sqlQueryForId,Integer.class);
         String sqlQueryForDocs = "insert into property_claim_docs(document,property_claim_id) values(?,?)";

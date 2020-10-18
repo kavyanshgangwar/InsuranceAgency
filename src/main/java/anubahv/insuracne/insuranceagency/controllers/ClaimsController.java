@@ -198,11 +198,13 @@ public class ClaimsController {
         }
         storageService.uploadFile(file,loggedInUserName,"claims/property/"+id);
         propertyClaim.setRecordId(policyRecord.getId());
+        propertyClaim.setStatus("active");
         propertyClaim.setAmount(policy.getMaxClaimAmount());
         List<String> docs = new ArrayList<>();
         docs.add(storageService.getUploadLocation(file,loggedInUserName,"claims/property/"+id));
         propertyClaim.setLinkToDocuments(docs);
         propertyClaimsServices.add(propertyClaim);
+        policyRecordService.changeStatus("claimed",policyRecord.getId());
         return "redirect:/self";
     }
 }
