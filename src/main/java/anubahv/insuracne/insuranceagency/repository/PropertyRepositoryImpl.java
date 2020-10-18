@@ -42,7 +42,7 @@ public class PropertyRepositoryImpl implements PropertyRepository {
     public List<Property> findByUSerAndRecord(int userId, int recordId) {
         String sqlQuery;
         if(recordId==0){
-            sqlQuery="select * from property where user = '"+userId+"' and record_id = 'NULL'";
+            sqlQuery="select * from property where user = '"+userId+"' and record_id is null";
         }else{
             sqlQuery = "select * from property where user = '"+userId+"' and record_id = '"+recordId+"'";
         }
