@@ -49,8 +49,8 @@ public class HealthClaimRepositoryImpl implements HealthClaimRepository {
 
     @Override
     public void save(HealthClaim healthClaim) {
-        String sqlQuery = "insert into health_calims(damage,amount,status,date_of_loss,record_id) values(?,?,?,?,?)";
-        jdbcTemplate.update(sqlQuery);
+        String sqlQuery = "insert into health_claims(damage,amount,status,date_of_loss,record_id) values(?,?,?,?,?)";
+        jdbcTemplate.update(sqlQuery,healthClaim.getDamage(),healthClaim.getAmount(),healthClaim.getStatus(),healthClaim.getDateOfLoss(),healthClaim.getRecordId());
         String sqlQueryForId = "select id from health_claims where record_id = '"+healthClaim.getRecordId()+"'";
         int id = jdbcTemplate.queryForObject(sqlQueryForId,Integer.class);
         String sqlQueryForDocs = "insert into health_claim_docs(document,health_claim_id) values(?,?)";
