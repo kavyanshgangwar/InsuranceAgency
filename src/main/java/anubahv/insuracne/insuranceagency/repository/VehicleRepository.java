@@ -14,4 +14,5 @@ public interface VehicleRepository {
     public void save(Vehicle vehicle);
     public void changeRecord(int recordId,int id);
     public void delete(int id);
+    public Vehicle findByRecord(int recordId);
 }

@@ -1,9 +1,6 @@
 package anubahv.insuracne.insuranceagency.controllers;
 
-import anubahv.insuracne.insuranceagency.models.HealthClaim;
-import anubahv.insuracne.insuranceagency.models.Policy;
-import anubahv.insuracne.insuranceagency.models.PolicyRecord;
-import anubahv.insuracne.insuranceagency.models.User;
+import anubahv.insuracne.insuranceagency.models.*;
 import anubahv.insuracne.insuranceagency.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,9 +25,11 @@ public class ClaimsController {
     PolicyRecordService policyRecordService;
     PolicyService policyService;
     StorageService storageService;
+    VehicleService vehicleService;
+    PropertyService propertyService;
 
     @Autowired
-    public ClaimsController(VehicleClaimsService vehicleClaimsService, PropertyClaimsServices propertyClaimsServices, HealthClaimServices healthClaimServices, LifeInsuranceClaimService lifeInsuranceClaimService, SecurityService securityService, UserService userService, PolicyRecordService policyRecordService, PolicyService policyService, StorageService storageService) {
+    public ClaimsController(VehicleClaimsService vehicleClaimsService, PropertyClaimsServices propertyClaimsServices, HealthClaimServices healthClaimServices, LifeInsuranceClaimService lifeInsuranceClaimService, SecurityService securityService, UserService userService, PolicyRecordService policyRecordService, PolicyService policyService, StorageService storageService, VehicleService vehicleService, PropertyService propertyService) {
         this.vehicleClaimsService = vehicleClaimsService;
         this.propertyClaimsServices = propertyClaimsServices;
         this.healthClaimServices = healthClaimServices;
@@ -40,6 +39,8 @@ public class ClaimsController {
         this.policyRecordService = policyRecordService;
         this.policyService = policyService;
         this.storageService = storageService;
+        this.vehicleService = vehicleService;
+        this.propertyService = propertyService;
     }
 
     @GetMapping("/claims/health/{id}")
@@ -92,6 +93,57 @@ public class ClaimsController {
         docs.add(storageService.getUploadLocation(file,loggedInUserName,"claims/health/"+id));
         healthClaim.setLinkToDocuments(docs);
         healthClaimServices.add(healthClaim);
+        return "redirect:/self";
+    }
+
+    @GetMapping("/claims/vehicle/{id}")
+    public String vehicleClaim(@PathVariable("id")int id, Model model){
+        String loggedInUserName = securityService.findLoggedInUsername();
+        if(loggedInUserName==null){
+            return "redirect:/login";
+        }
+        VehicleClaims vehicleClaims = new VehicleClaims();
+        vehicleClaims.setRecordId(id);
+        model.addAttribute("vehicleClaim",vehicleClaims);
+        return "claims/vehicleClaim";
+    }
+
+    @PostMapping("/claims/vehicle/{id}")
+    public String vehicleClaim(@PathVariable("id")int id,Model model, @RequestParam("file")MultipartFile file,@RequestParam("date") String date,@ModelAttribute("vehicleClaim")VehicleClaims vehicleClaims){
+        String loggedInUserName = securityService.findLoggedInUsername();
+        if(loggedInUserName==null){
+            return "redirect:/login";
+        }
+        User user = userService.findByUsername(loggedInUserName);
+        PolicyRecord policyRecord = policyRecordService.getPolicyRecord(id);
+        if(policyRecord.getUserId()!=user.getId()){
+            model.addAttribute("link","/claims/vehicle/"+id);
+            return "profile/formFailure";
+        }
+        try{
+            vehicleClaims.setDateOfLoss(new SimpleDateFormat("yyyy-MM-dd").parse(date));
+        }catch (ParseException e){
+            e.printStackTrace();
+            model.addAttribute("link","/claims/vehicle/"+id);
+            return "profile/formFailure";
+        }
+        Policy policy = policyService.findById(policyRecord.getPolicyId());
+        if(!policy.getCategory().equals("vehicle")){
+            model.addAttribute("link","/self");
+            return "profile/formFailure";
+        }
+        try{
+            Vehicle vehicle = vehicleService.getByRecord(policyRecord.getId());
+            vehicleClaims.setVehicleId(vehicle.getId());
+        }catch (Exception e){
+            //cannot find a valid vehicle cannot claim;
+            return "profile/formFailure";
+        }
+        storageService.uploadFile(file,loggedInUserName,"claims/vehicle/"+id);
+        vehicleClaims.setAmount(policy.getMaxClaimAmount());
+        vehicleClaims.setRecordId(policyRecord.getId());
+        vehicleClaims.setStatus("active");
+        vehicleClaimsService.add(vehicleClaims);
         return "redirect:/self";
     }
 }

@@ -65,6 +65,12 @@ public class VehicleRepositoryImpl implements VehicleRepository {
     }
 
     @Override
+    public Vehicle findByRecord(int recordId) {
+        String sqlQuery = "select * from vehicle where record_id ='"+recordId+"'";
+        return jdbcTemplate.queryForObject(sqlQuery,vehicleRowMapper);
+    }
+
+    @Override
     public void save(Vehicle vehicle) {
         String sqlQuery = "insert into vehicle(vehicle_number,document,record_id,user) values(?,?,?,?)";
         jdbcTemplate.update(sqlQuery,vehicle.getVehicleNumber(),vehicle.getDocumentLocation(),vehicle.getRecordId()==0?null:vehicle.getRecordId(),vehicle.getUserId());
