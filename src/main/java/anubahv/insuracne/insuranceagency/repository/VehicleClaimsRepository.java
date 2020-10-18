@@ -10,4 +10,6 @@ public interface VehicleClaimsRepository {
     public void changeStatus(String status,int id);
     public List<String> getRelatedDocuments(int id);
     public void delete(int id);
+
+    List<VehicleClaims> findAllOfUserByStatus(int userId, String status);
 }

@@ -49,6 +49,22 @@ public class PropertyClaimsRepositoryImpl implements PropertyClaimsRepository {
     }
 
     @Override
+    public List<PropertyClaim> findAllOfUserByStatus(int userId, String status) {
+        String sqlQuery = "select pc.* from property_claims pc, policy_record p where p.id = pc.record_id and p.user_id='"+userId+"' and pc.status='"+status+"'";
+        List<PropertyClaim> propertyClaims =jdbcTemplate.query(sqlQuery,propertyClaimRowMapper);
+        for(int i=0;i<propertyClaims.size();i++){
+            String sqlQueryForDocs = "select document from property_claim_docs where property_claim_id='"+propertyClaims.get(i).getId()+"'";
+            propertyClaims.get(i).setLinkToDocuments(jdbcTemplate.query(sqlQueryForDocs, new RowMapper<String>() {
+                @Override
+                public String mapRow(ResultSet resultSet, int i) throws SQLException {
+                    return resultSet.getString("document");
+                }
+            }));
+        }
+        return propertyClaims;
+    }
+
+    @Override
     public void save(PropertyClaim propertyClaim) {
         String sqlQuery = "insert into property_claims(damage,amount,status,date_of_loss,property_id,record_id) values(?,?,?,?,?,?)";
         jdbcTemplate.update(sqlQuery,propertyClaim.getDamage(),propertyClaim.getAmount(),propertyClaim.getStatus(),propertyClaim.getDateOfLoss(),propertyClaim.getPropertyId(),propertyClaim.getRecordId());

@@ -40,4 +40,9 @@ public class PropertyClaimsServiceImpl implements PropertyClaimsServices {
     public void delete(int id) {
         propertyClaimsRepository.delete(id);
     }
+
+    @Override
+    public List<PropertyClaim> allActiveOfUser(int userId) {
+        return propertyClaimsRepository.findAllOfUserByStatus(userId,"active");
+    }
 }

@@ -40,4 +40,9 @@ public class HealthClaimServicesImpl implements HealthClaimServices {
     public void delete(int id) {
         healthClaimRepository.delete(id);
     }
+
+    @Override
+    public List<HealthClaim> allActiveOfUser(int userId) {
+        return healthClaimRepository.findAllOfUserByStatus(userId,"active");
+    }
 }

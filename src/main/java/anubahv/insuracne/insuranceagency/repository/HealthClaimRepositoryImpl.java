@@ -48,6 +48,22 @@ public class HealthClaimRepositoryImpl implements HealthClaimRepository {
     }
 
     @Override
+    public List<HealthClaim> findAllOfUserByStatus(int userId, String status) {
+        String sqlQuery = "select h.* from health_claims h , policy_record p where h.record_id = p.id and p.user_id='"+userId+"' and h.status='"+status+"'";
+        List<HealthClaim> healthClaims = jdbcTemplate.query(sqlQuery,healthClaimRowMapper);
+        for(int i=0;i<healthClaims.size();i++){
+            String sqlQueryForDocs = "select document from health_claim_docs where health_claim_id = '"+healthClaims.get(i).getId()+"'";
+            healthClaims.get(i).setLinkToDocuments(jdbcTemplate.query(sqlQueryForDocs, new RowMapper<String>() {
+                @Override
+                public String mapRow(ResultSet resultSet, int i) throws SQLException {
+                    return resultSet.getString("document");
+                }
+            }));
+        }
+        return healthClaims;
+    }
+
+    @Override
     public void save(HealthClaim healthClaim) {
         String sqlQuery = "insert into health_claims(damage,amount,status,date_of_loss,record_id) values(?,?,?,?,?)";
         jdbcTemplate.update(sqlQuery,healthClaim.getDamage(),healthClaim.getAmount(),healthClaim.getStatus(),healthClaim.getDateOfLoss(),healthClaim.getRecordId());

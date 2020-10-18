@@ -1,9 +1,6 @@
 package anubahv.insuracne.insuranceagency.controllers;
 
-import anubahv.insuracne.insuranceagency.models.Property;
-import anubahv.insuracne.insuranceagency.models.Transaction;
-import anubahv.insuracne.insuranceagency.models.User;
-import anubahv.insuracne.insuranceagency.models.Vehicle;
+import anubahv.insuracne.insuranceagency.models.*;
 import anubahv.insuracne.insuranceagency.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -154,5 +151,21 @@ public class UserProfileController {
         List<Transaction> transactions = transactionService.getAllOfUser(user.getId());
         model.addAttribute("transactions",transactions);
         return "profile/transactions";
+    }
+
+    @RequestMapping("/self/activeclaims")
+    public String activeClaims(Model model){
+        String loggedInUserName = securityService.findLoggedInUsername();
+        if (loggedInUserName==null){
+            return "redirect:/login";
+        }
+        User user = userService.findByUsername(loggedInUserName);
+        List<HealthClaim> healthClaims = healthClaimServices.allActiveOfUser(user.getId());
+        model.addAttribute("healthClaims",healthClaims);
+        List<VehicleClaims> vehicleClaims = vehicleClaimsService.allActiveOfUser(user.getId());
+        model.addAttribute("vehicleClaims",vehicleClaims);
+        List<PropertyClaim> propertyClaims = propertyClaimsServices.allActiveOfUser(user.getId());
+        model.addAttribute("propertyClaims",propertyClaims);
+        return "profile/activeClaims";
     }
 }

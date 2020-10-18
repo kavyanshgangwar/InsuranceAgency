@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Active Claims</title>
+</head>
+<body>
+health claims
+<ul>
+    <li th:each="healthClaim : ${healthClaims}" th:text="${healthClaim.getRecordId()}"></li>
+</ul>
+vehicle claims
+<ul>
+    <li th:each="vehicleClaim: ${vehicleClaims}" th:text="${vehicleClaim.getRecordId()}"></li>
+</ul>
+property claims
+<ul>
+    <li th:each="propertyClaim : ${propertyClaims}" th:text="${propertyClaim.getRecordId()}"></li>
+</ul>
+</body>
+</html>

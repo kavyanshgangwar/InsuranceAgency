@@ -10,4 +10,5 @@ public interface PropertyClaimsServices {
     public void changeStatus(String status,int id);
     public List<String> getRelatedDocuments(int id);
     public void delete(int id);
+    List<PropertyClaim> allActiveOfUser(int userId);
 }

@@ -10,4 +10,5 @@ public interface HealthClaimServices {
     public void changeStatus(String status,int id);
     public List<String> getRelatedDocuments(int id);
     public void delete(int id);
+    public List<HealthClaim> allActiveOfUser(int userId);
 }

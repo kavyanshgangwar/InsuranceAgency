@@ -40,4 +40,9 @@ public class VehicleClaimsServiceImpl implements VehicleClaimsService {
     public void delete(int id) {
         vehicleClaimsRepository.delete(id);
     }
+
+    @Override
+    public List<VehicleClaims> allActiveOfUser(int userId) {
+        return vehicleClaimsRepository.findAllOfUserByStatus(userId,"active");
+    }
 }
