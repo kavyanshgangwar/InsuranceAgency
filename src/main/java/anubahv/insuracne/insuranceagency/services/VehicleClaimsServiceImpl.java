@@ -42,6 +42,11 @@ public class VehicleClaimsServiceImpl implements VehicleClaimsService {
     }
 
     @Override
+    public List<VehicleClaims> allProcessedOfUser(int userId) {
+        return vehicleClaimsRepository.findAllOfUserByStatus(userId,"processed");
+    }
+
+    @Override
     public List<VehicleClaims> allActiveOfUser(int userId) {
         return vehicleClaimsRepository.findAllOfUserByStatus(userId,"active");
     }

@@ -11,4 +11,6 @@ public interface HealthClaimServices {
     public List<String> getRelatedDocuments(int id);
     public void delete(int id);
     public List<HealthClaim> allActiveOfUser(int userId);
+
+    List<HealthClaim> allProcessedOfUser(int userId);
 }

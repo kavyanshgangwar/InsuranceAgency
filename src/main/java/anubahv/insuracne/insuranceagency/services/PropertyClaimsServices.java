@@ -11,4 +11,6 @@ public interface PropertyClaimsServices {
     public List<String> getRelatedDocuments(int id);
     public void delete(int id);
     List<PropertyClaim> allActiveOfUser(int userId);
+
+    List<PropertyClaim> allProcessedOfUser(int userId);
 }

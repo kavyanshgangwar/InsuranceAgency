@@ -11,4 +11,6 @@ public interface VehicleClaimsService {
     List<String> getRelatedDocuments(int id);
     void delete(int id);
     List<VehicleClaims> allActiveOfUser(int userId);
+
+    List<VehicleClaims> allProcessedOfUser(int userId);
 }

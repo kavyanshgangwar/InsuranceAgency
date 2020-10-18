@@ -42,6 +42,11 @@ public class HealthClaimServicesImpl implements HealthClaimServices {
     }
 
     @Override
+    public List<HealthClaim> allProcessedOfUser(int userId) {
+        return healthClaimRepository.findAllOfUserByStatus(userId,"processed");
+    }
+
+    @Override
     public List<HealthClaim> allActiveOfUser(int userId) {
         return healthClaimRepository.findAllOfUserByStatus(userId,"active");
     }

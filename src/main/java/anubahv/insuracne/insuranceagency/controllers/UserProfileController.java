@@ -168,4 +168,20 @@ public class UserProfileController {
         model.addAttribute("propertyClaims",propertyClaims);
         return "profile/activeClaims";
     }
+
+    @RequestMapping("/self/processedclaims")
+    public String processedClaims(Model model){
+        String loggedInUserName = securityService.findLoggedInUsername();
+        if (loggedInUserName==null){
+            return "redirect:/login";
+        }
+        User user = userService.findByUsername(loggedInUserName);
+        List<HealthClaim> healthClaims = healthClaimServices.allProcessedOfUser(user.getId());
+        model.addAttribute("healthClaims",healthClaims);
+        List<VehicleClaims> vehicleClaims = vehicleClaimsService.allProcessedOfUser(user.getId());
+        model.addAttribute("vehicleClaims",vehicleClaims);
+        List<PropertyClaim> propertyClaims = propertyClaimsServices.allProcessedOfUser(user.getId());
+        model.addAttribute("propertyClaims",propertyClaims);
+        return "profile/processedClaims";
+    }
 }

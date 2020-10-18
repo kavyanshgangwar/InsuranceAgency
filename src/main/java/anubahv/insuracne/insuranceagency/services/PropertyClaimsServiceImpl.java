@@ -42,6 +42,11 @@ public class PropertyClaimsServiceImpl implements PropertyClaimsServices {
     }
 
     @Override
+    public List<PropertyClaim> allProcessedOfUser(int userId) {
+        return propertyClaimsRepository.findAllOfUserByStatus(userId,"processed");
+    }
+
+    @Override
     public List<PropertyClaim> allActiveOfUser(int userId) {
         return propertyClaimsRepository.findAllOfUserByStatus(userId,"active");
     }
