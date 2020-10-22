@@ -45,6 +45,7 @@ public class UserProfileController {
         if(loggedInUserName==null){
             return "redirect:/login";
         }
+        model.addAttribute("loginStatus",true);
         User user =  userService.findByUsername(loggedInUserName);
         model.addAttribute("user",user);
         return "profile/userprofile";
@@ -56,6 +57,7 @@ public class UserProfileController {
         if(loggedInUserName==null){
             return "redirect:/login";
         }
+        model.addAttribute("loginStatus",true);
         User user = userService.findByUsername(loggedInUserName);
         List<Property> properties = propertyService.getByUser(user.getId());
         model.addAttribute("properties",properties);
@@ -68,6 +70,7 @@ public class UserProfileController {
         if(loggedInUserName==null){
             return "redirect:/login";
         }
+        model.addAttribute("loginStatus",true);
         model.addAttribute("property",new Property());
         return "profile/addProperty";
     }
@@ -96,6 +99,7 @@ public class UserProfileController {
         if(loggedInUserName==null){
             return "redirect:/login";
         }
+        model.addAttribute("loginStatus",true);
         User user = userService.findByUsername(loggedInUserName);
         List<Vehicle> vehicles = vehicleService.getByUser(user.getId());
         model.addAttribute("vehicles",vehicles);
@@ -108,6 +112,7 @@ public class UserProfileController {
         if(loggedInUserName==null){
             return "redirect:/login";
         }
+        model.addAttribute("loginStatus",true);
         model.addAttribute("vehicle",new Vehicle());
         return "profile/addVehicle";
     }
@@ -136,6 +141,7 @@ public class UserProfileController {
         if(loggedInUserName==null){
             return "redirect:/login";
         }
+        model.addAttribute("loginStatus",true);
         User user = userService.findByUsername(loggedInUserName);
         model.addAttribute("policies",policyRecordService.getAllOfUser(user.getId()));
         return "profile/policyRecords";
@@ -147,6 +153,7 @@ public class UserProfileController {
         if(loggedInUserName==null){
             return "redirect:/login";
         }
+        model.addAttribute("loginStatus",true);
         User user = userService.findByUsername(loggedInUserName);
         List<Transaction> transactions = transactionService.getAllOfUser(user.getId());
         model.addAttribute("transactions",transactions);
@@ -159,6 +166,7 @@ public class UserProfileController {
         if (loggedInUserName==null){
             return "redirect:/login";
         }
+        model.addAttribute("loginStatus",true);
         User user = userService.findByUsername(loggedInUserName);
         List<HealthClaim> healthClaims = healthClaimServices.allActiveOfUser(user.getId());
         model.addAttribute("healthClaims",healthClaims);
@@ -175,6 +183,7 @@ public class UserProfileController {
         if (loggedInUserName==null){
             return "redirect:/login";
         }
+        model.addAttribute("loginStatus",true);
         User user = userService.findByUsername(loggedInUserName);
         List<HealthClaim> healthClaims = healthClaimServices.allProcessedOfUser(user.getId());
         model.addAttribute("healthClaims",healthClaims);

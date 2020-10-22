@@ -45,11 +45,23 @@ public class PolicyController {
 
     @RequestMapping({"","/"})
     public String policyCategories(Model model){
+        String loggedInUSerName = securityService.findLoggedInUsername();
+        if(loggedInUSerName==null){
+            model.addAttribute("loginStatus",false);
+        }else{
+            model.addAttribute("loginStatus",true);
+        }
         return "policy/policyCategories";
     }
 
     @RequestMapping({"/health"})
     public String healthPolicies(Model model){
+        String loggedInUSerName = securityService.findLoggedInUsername();
+        if(loggedInUSerName==null){
+            model.addAttribute("loginStatus",false);
+        }else{
+            model.addAttribute("loginStatus",true);
+        }
         model.addAttribute("category","health");
         model.addAttribute("policies",policyService.findActiveHealthPolicies());
         model.addAttribute("faqs",faqRepository.findByTopic("health"));
@@ -58,6 +70,12 @@ public class PolicyController {
 
     @RequestMapping({"/property"})
     public String propertyPolicies(Model model){
+        String loggedInUSerName = securityService.findLoggedInUsername();
+        if(loggedInUSerName==null){
+            model.addAttribute("loginStatus",false);
+        }else{
+            model.addAttribute("loginStatus",true);
+        }
         model.addAttribute("category","property");
         model.addAttribute("policies",policyService.findActivePropertyPolicies());
         model.addAttribute("faqs",faqRepository.findByTopic("property"));
@@ -66,6 +84,12 @@ public class PolicyController {
 
     @RequestMapping({"/vehicle"})
     public String vehiclePolicies(Model model){
+        String loggedInUSerName = securityService.findLoggedInUsername();
+        if(loggedInUSerName==null){
+            model.addAttribute("loginStatus",false);
+        }else{
+            model.addAttribute("loginStatus",true);
+        }
         model.addAttribute("category","vehicle");
         model.addAttribute("policies",policyService.findActiveVehiclePolicies());
         model.addAttribute("faqs",faqRepository.findByTopic("vehicle"));
@@ -73,6 +97,12 @@ public class PolicyController {
     }
     @RequestMapping({"/life"})
     public String lifePolicies(Model model){
+        String loggedInUSerName = securityService.findLoggedInUsername();
+        if(loggedInUSerName==null){
+            model.addAttribute("loginStatus",false);
+        }else{
+            model.addAttribute("loginStatus",true);
+        }
         model.addAttribute("category","life");
         model.addAttribute("policies",policyService.findActiveLifePolicies());
         model.addAttribute("faqs",faqRepository.findByTopic("life"));
@@ -81,6 +111,12 @@ public class PolicyController {
 
     @RequestMapping({"/{id}"})
     public String policyDetails(@PathVariable("id") int id, Model model){
+        String loggedInUSerName = securityService.findLoggedInUsername();
+        if(loggedInUSerName==null){
+            model.addAttribute("loginStatus",false);
+        }else{
+            model.addAttribute("loginStatus",true);
+        }
         model.addAttribute("policy",policyService.findById(id));
         return "policy/policyDetails";
     }
@@ -91,6 +127,7 @@ public class PolicyController {
             return "redirect:/login";
         }
         User user = userService.findByUsername(securityService.findLoggedInUsername());
+        model.addAttribute("loginStatus",true);
         Policy policy = policyService.findById(id);
         model.addAttribute("policy",policy);
 

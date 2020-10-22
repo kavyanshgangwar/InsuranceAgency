@@ -31,11 +31,17 @@
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item ml-2 mr-2">
+            <li class="nav-item ml-2 mr-2" th:if="not ${loginStatus}">
                 <a th:href="@{/login}" class="nav-link quicksand font-weight-bold text-white">Login</a>
             </li>
-            <li class="nav-item ml-2 mr-4">
+            <li class="nav-item ml-2 mr-4" th:if="not ${loginStatus}">
                 <a th:href="@{/register}" class="nav-link quicksand font-weight-bold text-white">Register</a>
+            </li>
+            <li class="nav-item ml-2 mr-4" th:if="${loginStatus}">
+                <a th:href="@{/self}" class="nav-link quicksand font-weight-bold text-white">Profile</a>
+            </li>
+            <li class="nav-item ml-2 mr-4" th:if="${loginStatus}">
+                <a th:href="@{/logout}" class="nav-link quicksand font-weight-bold text-white">Logout</a>
             </li>
         </ul>
     </div>

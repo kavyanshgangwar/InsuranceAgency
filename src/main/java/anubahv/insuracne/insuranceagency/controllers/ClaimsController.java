@@ -49,6 +49,7 @@ public class ClaimsController {
         if(loggedInUserName==null){
             return "redirect:/login";
         }
+        model.addAttribute("loginStatus",true);
         HealthClaim healthClaim = new HealthClaim();
         healthClaim.setRecordId(id);
         model.addAttribute("healthClaim",healthClaim);
@@ -107,6 +108,7 @@ public class ClaimsController {
         if(loggedInUserName==null){
             return "redirect:/login";
         }
+        model.addAttribute("loginStatus",true);
         VehicleClaims vehicleClaims = new VehicleClaims();
         vehicleClaims.setRecordId(id);
         model.addAttribute("vehicleClaim",vehicleClaims);
@@ -167,6 +169,7 @@ public class ClaimsController {
         if(loggedInUserName==null){
             return "redirect:/login";
         }
+        model.addAttribute("loginStatus",true);
         PropertyClaim propertyClaim = new PropertyClaim();
         propertyClaim.setRecordId(id);
         model.addAttribute("propertyClaim",propertyClaim);
@@ -227,6 +230,7 @@ public class ClaimsController {
         if(loggedInUserName==null){
             return "redirect:/login";
         }
+        model.addAttribute("loginStatus",true);
         LifeInsuranceClaim lifeInsuranceClaim = new LifeInsuranceClaim();
         lifeInsuranceClaim.setRecordId(id);
         model.addAttribute("lifeInsuranceClaim",lifeInsuranceClaim);
