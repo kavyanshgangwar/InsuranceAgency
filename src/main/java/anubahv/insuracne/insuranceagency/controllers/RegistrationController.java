@@ -14,8 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.security.Principal;
 import java.util.Calendar;
 
 @Controller
@@ -32,18 +32,24 @@ public class RegistrationController {
         this.eventPublisher = eventPublisher;
     }
 
-    @GetMapping("/register")
+    @GetMapping({"/register"})
     public String register(Model model){
         model.addAttribute("user",new User());
         return "register";
     }
 
+    @GetMapping("/registerError")
+    public String registerError(Model model){
+        model.addAttribute("user",new User());
+        model.addAttribute("emailError",true);
+        return "register";
+    }
+
     @PostMapping("/register")
-    public String register(@ModelAttribute("user") User user, BindingResult result, WebRequest request,Model model){
-        if(userService.findByUsername(user.getEmail())!=null){
-            model.addAttribute("emailError","email already exists");
-            return "forward:/register";
-        };
+    public String register(@ModelAttribute("user") User user, BindingResult result, WebRequest request, Model model, RedirectAttributes attributes){
+        if(userService.userExists(user.getEmail())){
+            return "redirect:/registerError";
+        }
         userService.save(user);
         User user1 = userService.findByUsername(user.getEmail());
         try {
