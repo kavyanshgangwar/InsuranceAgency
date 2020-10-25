@@ -126,6 +126,7 @@ public class PolicyController {
         if(securityService.findLoggedInUsername()==null){
             return "redirect:/login";
         }
+        model.addAttribute("loginStatus",true);
         User user = userService.findByUsername(securityService.findLoggedInUsername());
         model.addAttribute("loginStatus",true);
         Policy policy = policyService.findById(id);
@@ -160,6 +161,7 @@ public class PolicyController {
         Policy policy = policyService.findById(id);
         User user = userService.findByUsername(securityService.findLoggedInUsername());
 
+        model.addAttribute("loginStatus",true);
         // save the policy record
         PolicyRecord policyRecord = new PolicyRecord();
         policyRecord.setPolicyId(policy.getId());
