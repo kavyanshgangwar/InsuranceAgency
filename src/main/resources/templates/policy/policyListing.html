@@ -6,20 +6,42 @@
     <link th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/homepage.css}">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" th:href="@{/css/policyListing.css}">
 </head>
-<body class="quicksand">
+<body class="quicksand text-center">
 <div th:insert="homepage::navbar"></div>
-<h1 th:text="${category}">sample</h1>
-<ul>
-    <li th:each="policy : ${policies}"><a th:text="${policy.getName()}" th:href="@{/policy/{id}(id=${policy.getId()})}">sample</a></li>
-</ul>
 
-<h1>FAQ</h1>
-<!--list of faq-->
-<ul>
-    <li th:each="faq : ${faqs}"><p th:text="${faq.getQuestion()}"></p><p th:text="${faq.getAnswer()}"></p> </li>
-</ul>
+<div class="top-intro">
+    <img th:src="@{/images/faq.jpg}" alt="" style="width:100%;">
+    <h1 class="text-center top-intro-text quicksand text-weight-bolder" th:text="${category+' policies'}"></h1>
+</div>
+
+<div class="container my-5">
+    <div class="row text-center align-center">
+        <div th:each="policy: ${policies}" class="mx-auto p-2 col-12 col-md-6 col-lg-4">
+            <div class="card text-color-dark-blue p-3 pb-5 text-center">
+                <img class="mb-3 mt-5 mx-auto bg-dark p-3 rounded-circle" th:src="@{/images/logo.svg}" alt="" width="100" height="100">
+
+                <h3 th:text="${policy.getName()}" class="text-color-dark-blue">title</h3>
+                <p>
+                    amount: $<span th:text="${policy.getMaxClaimAmount()}"></span>
+                </p>
+                <p>
+                    premium: $<span th:text="${policy.getPremium()}"></span>
+                </p>
+                <a th:href="@{/policy/{id}(id=${policy.getId()})}"><button class="btn no-outline custom-radius-border bg-theme1 font-weight-bold text-white py-2 px-4">Know more</button></a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<a th:href="@{/FAQ/{category}(category=${category})}"><button type="button" name="button" class="btn no-outline custom-radius-border bg-theme1 font-weight-bold text-white py-2 px-4">FAQs</button></a>
+
+
+<div th:insert="homepage::bottom-display"></div>
+
 <!-- fontawesome script -->
 <script src="https://kit.fontawesome.com/1f4b1ad491.js" crossorigin="anonymous"></script>
 
