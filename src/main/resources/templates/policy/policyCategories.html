@@ -8,17 +8,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 </head>
-<body>
+<body class="quicksand">
     <div th:insert="homepage :: navbar"></div>
-    <ul>
-        <li><a th:href="@{/policy/health}">health</a></li>
-        <li><a th:href="@{/policy/property}">property</a></li>
-        <li><a th:href="@{/policy/vehicle}">vehicle</a></li>
-        <li><a th:href="@{/policy/life}">life</a></li>
-    </ul>
 
 
+    <div class="top-intro mb-5">
+        <img th:src="@{/images/faq.jpg}" alt="" style="width:100%;">
+        <h1 class="text-center top-intro-text quicksand text-weight-bolder">Policies</h1>
+    </div>
 
+    <div th:insert="homepage::policy-categories"></div>
+
+    <div th:insert="homepage::bottom-display"></div>
 
     <script src="https://kit.fontawesome.com/1f4b1ad491.js" crossorigin="anonymous"></script>
 

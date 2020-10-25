@@ -126,35 +126,43 @@
 
 
 <!-- types of insurances -->
-<div class="container mt-2 mb-4">
+<div th:fragment="policy-categories" class="container mt-2 mb-4">
     <p class="text-center font-weight-bold service-section-header">
         O U R <span class="pl-2">B</span> E S T <span class="pl-2">S</span> E R V I C E S
     </p>
     <h1 class="about-us-heading text-center col-lg-6 mx-auto">Best insurance services for our client’s</h1>
     <div class="row">
         <div class="text-center col col-lg-3 col-md-6 col-sm-6 col-xs-6 col-12">
+            <a style="text-decoration: none;" th:href="@{/policy/health}">
             <i class="far fa-plus-square text-theme1 display-3 pt-4 pb-2"></i>
             <p class="text-color-dark-blue font-weight-bold pb-4" style="font-size:1.3rem">
                 Health insurance
             </p>
+            </a>
         </div>
         <div class="text-center col col-lg-3 col-md-6 col-sm-6 col-xs-6 col-12">
+            <a style="text-decoration: none;" th:href="@{/policy/property}">
             <i class="fas fa-home text-theme1 display-3 pt-4 pb-2"></i>
             <p class="text-color-dark-blue font-weight-bold pb-4" style="font-size:1.3rem">
                 Home insurance
             </p>
+            </a>
         </div>
         <div class="text-center col col-lg-3 col-md-6 col-sm-6 col-xs-6 col-12">
+            <a style="text-decoration: none;" th:href="@{/policy/life}">
             <i class="fas fa-heartbeat text-theme1 display-3 pt-4 pb-2"></i>
             <p class="text-color-dark-blue font-weight-bold pb-4" style="font-size:1.3rem">
                 Life insurance
             </p>
+            </a>
         </div>
         <div class="text-center col col-lg-3 col-md-6 col-sm-6 col-xs-6 col-12">
+            <a style="text-decoration: none;" th:href="@{/policy/vehicle}">
             <i class="fas fa-car text-theme1 display-3 pt-4 pb-2"></i>
             <p class="text-color-dark-blue font-weight-bold pb-4" style="font-size:1.3rem">
                 Car insurance
             </p>
+            </a>
         </div>
     </div>
 </div>
