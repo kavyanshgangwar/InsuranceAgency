@@ -143,7 +143,7 @@ public class UserProfileController {
         }
         model.addAttribute("loginStatus",true);
         User user = userService.findByUsername(loggedInUserName);
-        model.addAttribute("policies",policyRecordService.getAllOfUser(user.getId()));
+        model.addAttribute("policies",policyRecordService.getAllOfUserWithCategory(user.getId()));
         return "profile/policyRecords";
     }
 

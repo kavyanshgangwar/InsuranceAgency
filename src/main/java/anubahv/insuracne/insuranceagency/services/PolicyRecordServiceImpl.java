@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PolicyRecordServiceImpl implements PolicyRecordService {
@@ -70,5 +72,27 @@ public class PolicyRecordServiceImpl implements PolicyRecordService {
     @Override
     public void deleteRecord(int id) {
         policyRecordRepository.delete(id);
+    }
+
+    @Override
+    public Map<PolicyRecord, String> getAllOfUserWithCategory(int userId) {
+        Map<PolicyRecord,String> policyRecordsWithCategory = new HashMap<>();
+        List<PolicyRecord> healthPolicyRecords = policyRecordRepository.findAllOfUserOfCategory(userId,"health");
+        for(int i=0;i<healthPolicyRecords.size();i++){
+            policyRecordsWithCategory.put(healthPolicyRecords.get(i),"health");
+        }
+        List<PolicyRecord> vehiclePolicyRecords = policyRecordRepository.findAllOfUserOfCategory(userId,"vehicle");
+        for(int i=0;i<vehiclePolicyRecords.size();i++){
+            policyRecordsWithCategory.put(vehiclePolicyRecords.get(i),"vehicle");
+        }
+        List<PolicyRecord> propertyPolicyRecords = policyRecordRepository.findAllOfUserOfCategory(userId,"property");
+        for(int i=0;i<propertyPolicyRecords.size();i++){
+            policyRecordsWithCategory.put(propertyPolicyRecords.get(i),"property");
+        }
+        List<PolicyRecord> policyRecords = policyRecordRepository.findAllOfUserOfCategory(userId,"life");
+        for(int i=0;i<policyRecords.size();i++){
+            policyRecordsWithCategory.put(policyRecords.get(i),"life");
+        }
+        return policyRecordsWithCategory;
     }
 }

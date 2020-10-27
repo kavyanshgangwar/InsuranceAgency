@@ -4,6 +4,7 @@ import anubahv.insuracne.insuranceagency.models.PolicyRecord;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface PolicyRecordService {
     public List<PolicyRecord> getAllOfUser(int userId);
@@ -17,4 +18,6 @@ public interface PolicyRecordService {
     public PolicyRecord getPolicyRecord(int id);
     public PolicyRecord getPolicyRecord(int userId,int policyId);
     public void deleteRecord(int id);
+
+    Map<PolicyRecord,String> getAllOfUserWithCategory(int Userid);
 }
