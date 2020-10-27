@@ -6,18 +6,20 @@
     <link th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/homepage.css}">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/loginpage.css}">
 
 </head>
-<body>
+<body class="quicksand text-center">
 <div th:insert="homepage::navbar"></div>
-
-<form th:action="@{/claims/health/{id}(id=${healthClaim.getRecordId()})}"  method="post" enctype="multipart/form-data">
-    <input th:field="*{healthClaim.damage}" type="text" >
-    <input name="date" type="date">
-    <input type="file" name="file">
-    <input type="submit" value="submit">
+<div class="form-div">
+<form class="form-signin" th:action="@{/claims/health/{id}(id=${healthClaim.getRecordId()})}"  method="post" enctype="multipart/form-data">
+    <img class="mb-3 bg-dark p-3 rounded-circle" th:src="@{/images/logo.svg}" alt="" width="100" height="100">
+    <input class="form-control" placeholder="Damage Amount" th:field="*{healthClaim.damage}" type="number" >
+    <input class="form-control" placeholder="Date of Loss" name="date" type="date">
+    <input class="form-control" placeholder="Proof document" type="file" name="file">
+    <button class="btn btn-lg text-white bg-theme1 btn-block" type="submit">Submit</button>
 </form>
-
+</div>
 
 
 <!-- fontawesome script -->
