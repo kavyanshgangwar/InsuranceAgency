@@ -7,12 +7,29 @@
     <link rel="stylesheet" th:href="@{/css/homepage.css}">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" th:href="@{/css/profile.css}">
 </head>
 <body>
 <div th:insert="homepage::navbar"></div>
-<ul>
-    <li th:each="transaction:${transactions}" th:text="${transaction.getReceiptNumber()}"></li>
-</ul>
+
+<div class="container">
+    <div class="row">
+        <div th:insert="profile/userprofile::sidebar"></div>
+        <div class="col-md-12 pt-5 col-12 text-center">
+            <img class="mb-3 bg-dark p-3 rounded-circle" th:src="@{/images/logo.svg}" alt="" width="200" height="200">
+            <div class="card mx-auto col-md-10 col-12 my-4" th:each="transaction:${transactions}">
+                <p class="card-header px-0 bg-theme1 text-white font-weight-bold">Transaction ID: <span th:text="${transaction.getReceiptNumber()}"></span> </p>
+                <div class="card-body">
+                <h2 class="text-color-dark-blue" th:text="${'On Record: '+transaction.getRecordId()}"></h2>
+                <p class=" text-color-dark-blue" th:text="${'Amount: $'+transaction.getAmount()}"></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <!-- fontawesome script -->
 <script src="https://kit.fontawesome.com/1f4b1ad491.js" crossorigin="anonymous"></script>
