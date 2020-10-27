@@ -6,25 +6,73 @@
     <link th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/homepage.css}">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" th:href="@{/css/profile.css}">
 </head>
 <body class="quicksand">
 <div th:insert="homepage::navbar"></div>
 
 
-<h1>this is the profile page.</h1>
-<h2 th:text="${user.getFirstName()}"></h2>
-<h2 th:text="${user.getLastName()}"></h2>
-<h2 th:text="${user.getEmail()}"></h2>
-<h2 th:text="${user.getPhoneNo()}"></h2>
+<div class="container">
+    <div class="row">
+        <div th:fragment="sidebar" class="col-md-2 d-none d-md-block navbar navbar-expand-lg sidebar bg-theme1">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column font-weight-bold">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" th:href="@{/self}">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" th:href="@{/self/vehicle}">Vehicles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" th:href="@{/self/property}">Property</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" th:href="@{/self/policies}">Bought Policies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" th:href="@{/self/activeclaims}">Active Claims</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" th:href="@{self/processedclaims}">Processed Claims</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" th:href="@{/self/transactions}">Transactions</a>
+                    </li>
 
-<a th:href="@{/self}">profile</a>
-<a th:href="@{/self/vehicle}">vehicles</a>
-<a th:href="@{/self/property}">property</a>
-<a th:href="@{/self/policies}">bought policies</a>
-<a th:href="@{/self/activeclaims}">active claims</a>
-<a th:href="@{self/processedclaims}">processed claims</a>
-<a th:href="@{/self/transactions}">Transactions</a>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-12 pt-5 col-12 text-center">
+            <img class="mb-3 bg-dark p-3 rounded-circle" th:src="@{/images/logo.svg}" alt="" width="200" height="200">
+            <div class="card mx-auto col-md-10 col-12 my-4">
+                <p class="card-header px-0 bg-theme1 text-white font-weight-bold">Name</p>
+                <h2 class="card-body text-color-dark-blue" th:text="${user.getFirstName() + ' '+ user.getLastName()}"></h2>
+            </div>
+            <div class="card mx-auto col-md-10 col-12 my-4">
+                <p class="card-header px-0 bg-theme1 text-white font-weight-bold">Email</p>
+                <h2 class="card-body text-color-dark-blue" th:text="${user.getEmail()}"></h2>
+            </div>
+            <div class="card mx-auto col-md-10 col-12 my-4">
+                <p class="card-header px-0 bg-theme1 text-white font-weight-bold">Phone number</p>
+                <h2 class="card-body text-color-dark-blue" th:text="${user.getPhoneNo()}"></h2>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- fontawesome script -->
 <script src="https://kit.fontawesome.com/1f4b1ad491.js" crossorigin="anonymous"></script>
 
