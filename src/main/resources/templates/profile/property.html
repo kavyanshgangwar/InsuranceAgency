@@ -6,17 +6,25 @@
     <link th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/homepage.css}">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" th:href="@{/css/profile.css}">
 </head>
 <body class="quicksand">
 <div th:insert="homepage::navbar"></div>
+<div class="container">
+    <div class="row">
+        <div th:insert="profile/userprofile::sidebar"></div>
+        <div class="col-md-12 pt-5 col-12 text-center">
+            <img class="mb-3 bg-dark p-3 rounded-circle" th:src="@{/images/logo.svg}" alt="" width="200" height="200">
+            <div class="card mx-auto col-md-10 col-12 my-4" th:each="property : ${properties}">
+                <p class="card-header px-0 bg-theme1 text-white font-weight-bold">Property</p>
+                <h2 class="card-body text-color-dark-blue" th:text="${'Property Name: '+property.getName()}"></h2>
+            </div>
+            <a th:href="@{/self/property/add}"><button class="btn no-outline custom-radius-border bg-theme1 font-weight-bold text-white py-2 px-4">Add Property</button></a>
+        </div>
+    </div>
+</div>
 
-<ul>
 
-    <li th:each="property : ${properties}"><span th:text="${property.getName()}"></span> </li>
-</ul>
-
-<a th:href="@{/self/property/add}">add property</a>
 <!-- fontawesome script -->
 <script src="https://kit.fontawesome.com/1f4b1ad491.js" crossorigin="anonymous"></script>
 
