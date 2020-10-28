@@ -75,21 +75,21 @@ public class PolicyRecordServiceImpl implements PolicyRecordService {
     }
 
     @Override
-    public Map<PolicyRecord, String> getAllOfUserWithCategory(int userId) {
+    public Map<PolicyRecord, String> getActiveOfUserWithCategory(int userId) {
         Map<PolicyRecord,String> policyRecordsWithCategory = new HashMap<>();
-        List<PolicyRecord> healthPolicyRecords = policyRecordRepository.findAllOfUserOfCategory(userId,"health");
+        List<PolicyRecord> healthPolicyRecords = policyRecordRepository.findActiveOfUserOfCategory(userId,"health");
         for(int i=0;i<healthPolicyRecords.size();i++){
             policyRecordsWithCategory.put(healthPolicyRecords.get(i),"health");
         }
-        List<PolicyRecord> vehiclePolicyRecords = policyRecordRepository.findAllOfUserOfCategory(userId,"vehicle");
+        List<PolicyRecord> vehiclePolicyRecords = policyRecordRepository.findActiveOfUserOfCategory(userId,"vehicle");
         for(int i=0;i<vehiclePolicyRecords.size();i++){
             policyRecordsWithCategory.put(vehiclePolicyRecords.get(i),"vehicle");
         }
-        List<PolicyRecord> propertyPolicyRecords = policyRecordRepository.findAllOfUserOfCategory(userId,"property");
+        List<PolicyRecord> propertyPolicyRecords = policyRecordRepository.findActiveOfUserOfCategory(userId,"property");
         for(int i=0;i<propertyPolicyRecords.size();i++){
             policyRecordsWithCategory.put(propertyPolicyRecords.get(i),"property");
         }
-        List<PolicyRecord> policyRecords = policyRecordRepository.findAllOfUserOfCategory(userId,"life");
+        List<PolicyRecord> policyRecords = policyRecordRepository.findActiveOfUserOfCategory(userId,"life");
         for(int i=0;i<policyRecords.size();i++){
             policyRecordsWithCategory.put(policyRecords.get(i),"life");
         }

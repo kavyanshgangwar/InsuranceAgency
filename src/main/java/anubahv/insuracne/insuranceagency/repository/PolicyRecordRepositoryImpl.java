@@ -28,6 +28,13 @@ public class PolicyRecordRepositoryImpl implements PolicyRecordRepository {
         }
     };
 
+    @Override
+    public List<PolicyRecord> findActiveOfUserOfCategory(int userId, String category) {
+        String sqlQuery = "select pr.* from policy_record pr,policy p where p.id=pr.policy and pr.user_id = '"+userId+"' and p.category = '"+category+"' and pr.status='active'";
+        List<PolicyRecord> policyRecords = jdbcTemplate.query(sqlQuery,policyRecordRowMapper);
+        return policyRecords;
+    }
+
     @Autowired
     public PolicyRecordRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;

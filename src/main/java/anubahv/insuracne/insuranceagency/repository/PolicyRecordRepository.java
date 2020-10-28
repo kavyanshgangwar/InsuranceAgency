@@ -14,4 +14,5 @@ public interface PolicyRecordRepository {
     public List<PolicyRecord> findAllOfUser(int userId);
     public List<PolicyRecord> findAllOfUserOfCategory(int userId,String category);
     public void changeStatus(String status,int id);
+    List<PolicyRecord> findActiveOfUserOfCategory(int userId,String category);
 }

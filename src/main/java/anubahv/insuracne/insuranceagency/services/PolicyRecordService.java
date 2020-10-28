@@ -19,5 +19,5 @@ public interface PolicyRecordService {
     public PolicyRecord getPolicyRecord(int userId,int policyId);
     public void deleteRecord(int id);
 
-    Map<PolicyRecord,String> getAllOfUserWithCategory(int Userid);
+    Map<PolicyRecord,String> getActiveOfUserWithCategory(int Userid);
 }
