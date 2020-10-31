@@ -16,6 +16,10 @@ public class HomepageController {
         this.securityService = securityService;
     }
 
+    @RequestMapping("/403")
+    public String accessDenied(){
+        return "accessDenied";
+    }
     @RequestMapping({"/","","/homepage"})
     public String homepage(Model model){
         String loggedInUSerName = securityService.findLoggedInUsername();
