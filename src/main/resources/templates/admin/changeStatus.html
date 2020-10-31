@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>change Status</title>
+</head>
+<body>
+<form method="post" th:action="@{/admin/policy/change}">
+    <select name="id">
+        <option th:each="policy : ${policies}" th:value="${policy.getId()}" th:text="${policy.getId()+' '+policy.getName()}"></option>
+    </select>
+    <select name="status">
+        <option value="active">Active</option>
+        <option value="expired">Expired</option>
+    </select>
+    <input type="submit" value="submit">
+</form>
+</body>
+</html>

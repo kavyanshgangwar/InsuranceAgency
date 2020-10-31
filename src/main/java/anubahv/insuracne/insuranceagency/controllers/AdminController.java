@@ -8,10 +8,7 @@ import anubahv.insuracne.insuranceagency.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/admin")
 @Controller
@@ -47,5 +44,15 @@ public class AdminController {
         return "redirect:/admin";
     }
 
+    @GetMapping("/policy/change")
+    public String changeStatusOfPolicy(Model model){
+        model.addAttribute("policies",policyService.findAll());
+        return "admin/changeStatus";
+    }
 
+    @PostMapping("/policy/change")
+    public String changeStatusOfPolicy(@RequestParam("status")String status,@RequestParam("id") int id){
+        policyService.changeExpirationStatus(status,id);
+        return "redirect:/admin";
+    }
 }
