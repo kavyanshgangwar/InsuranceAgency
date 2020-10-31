@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Policy</title>
+</head>
+<body>
+<form method="post" th:action="@{/admin/policy/add}" th:object="${policy}">
+    <input type="text" th:field="*{name}" required>
+    <select th:field="*{category}" required>
+        <option value="life">Life insurance</option>
+        <option value="health">Health</option>
+        <option value="vehicle">vehicle</option>
+        <option value="property">property</option>
+    </select>
+    <input type="number" th:field="*{premium}" required>
+    <input type="number" th:field="*{maxClaimAmount}" required>
+    <input type="text" th:field="*{thingsCovered}" required>
+    <select th:field="*{expirationStatus}" required>
+        <option value="expired">Expired</option>
+        <option value="active">Active</option>
+    </select>
+    <input type="submit" value="submit">
+</form>
+</body>
+</html>
