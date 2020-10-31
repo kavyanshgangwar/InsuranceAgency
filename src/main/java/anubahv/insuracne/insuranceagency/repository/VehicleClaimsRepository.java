@@ -12,4 +12,6 @@ public interface VehicleClaimsRepository {
     public void delete(int id);
 
     List<VehicleClaims> findAllOfUserByStatus(int userId, String status);
+
+    List<VehicleClaims> getAllByStatus(String status);
 }

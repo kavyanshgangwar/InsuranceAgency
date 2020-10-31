@@ -64,6 +64,22 @@ public class VehicleClaimsRepositoryImpl implements VehicleClaimsRepository {
     }
 
     @Override
+    public List<VehicleClaims> getAllByStatus(String status) {
+        String sqlQuery = "select * from vehicle_claims where status='"+status+"'";
+        List<VehicleClaims> vehicleClaims = jdbcTemplate.query(sqlQuery,vehicleClaimsRowMapper);
+        for(int i=0;i<vehicleClaims.size();i++){
+            String sqlQueryForDocs = "select document from vehicle_claim_docs where vehicle_claim_id='"+vehicleClaims.get(i).getId()+"'";
+            vehicleClaims.get(i).setLinkToDocuments(jdbcTemplate.query(sqlQueryForDocs, new RowMapper<String>() {
+                @Override
+                public String mapRow(ResultSet resultSet, int i) throws SQLException {
+                    return resultSet.getString("document");
+                }
+            }));
+        }
+        return vehicleClaims;
+    }
+
+    @Override
     public void save(VehicleClaims vehicleClaims) {
         String sqlQuery = "insert into vehicle_claims(damage,amount,status,date_of_loss,vehicle_id,record_id) values(?,?,?,?,?,?)";
         jdbcTemplate.update(sqlQuery,vehicleClaims.getDamage(),vehicleClaims.getAmount(),vehicleClaims.getStatus(),vehicleClaims.getDateOfLoss(),vehicleClaims.getVehicleId(),vehicleClaims.getRecordId());

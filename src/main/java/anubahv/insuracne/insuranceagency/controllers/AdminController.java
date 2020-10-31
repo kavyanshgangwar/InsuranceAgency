@@ -2,25 +2,36 @@ package anubahv.insuracne.insuranceagency.controllers;
 
 import anubahv.insuracne.insuranceagency.models.Policy;
 import anubahv.insuracne.insuranceagency.models.User;
-import anubahv.insuracne.insuranceagency.services.PolicyService;
-import anubahv.insuracne.insuranceagency.services.SecurityService;
-import anubahv.insuracne.insuranceagency.services.UserDetailsServiceImpl;
+import anubahv.insuracne.insuranceagency.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("/admin")
 @Controller
 public class AdminController {
     PolicyService policyService;
     SecurityService securityService;
+    HealthClaimServices healthClaimServices;
+    VehicleClaimsService vehicleClaimsService;
+    PropertyClaimsServices propertyClaimsServices;
+    LifeInsuranceClaimService lifeInsuranceClaimService;
 
     @Autowired
-    public AdminController(PolicyService policyService, SecurityService securityService) {
+    public AdminController(PolicyService policyService, SecurityService securityService, HealthClaimServices healthClaimServices, VehicleClaimsService vehicleClaimsService, PropertyClaimsServices propertyClaimsServices, LifeInsuranceClaimService lifeInsuranceClaimService) {
         this.policyService = policyService;
         this.securityService = securityService;
+        this.healthClaimServices = healthClaimServices;
+        this.vehicleClaimsService = vehicleClaimsService;
+        this.propertyClaimsServices = propertyClaimsServices;
+        this.lifeInsuranceClaimService = lifeInsuranceClaimService;
     }
+
+
+
 
     @RequestMapping({"","/"})
     public String adminHome(){
@@ -54,5 +65,14 @@ public class AdminController {
     public String changeStatusOfPolicy(@RequestParam("status")String status,@RequestParam("id") int id){
         policyService.changeExpirationStatus(status,id);
         return "redirect:/admin";
+    }
+
+    @RequestMapping("/claims")
+    public String seeAllClaims(Model model){
+        model.addAttribute("healthClaims",healthClaimServices.getClaimsByStatus("active"));
+        model.addAttribute("vehicleClaims",vehicleClaimsService.getClaimsByStatus("active"));
+        model.addAttribute("propertyClaims",propertyClaimsServices.getClaimsByStatus("active"));
+        model.addAttribute("lifeClaims",lifeInsuranceClaimService.getClaimsByStatus("active"));
+        return "admin/claims";
     }
 }

@@ -5,6 +5,8 @@ import anubahv.insuracne.insuranceagency.repository.LifeInsuranceClaimsRepositor
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class LifeInsuranceClaimServiceImpl implements LifeInsuranceClaimService {
     LifeInsuranceClaimsRepository lifeInsuranceClaimsRepository;
@@ -37,5 +39,10 @@ public class LifeInsuranceClaimServiceImpl implements LifeInsuranceClaimService 
     @Override
     public String getDeathCertificate(int id) {
         return lifeInsuranceClaimsRepository.findDocuments(id);
+    }
+
+    @Override
+    public List<LifeInsuranceClaim> getClaimsByStatus(String status) {
+        return lifeInsuranceClaimsRepository.findAllByStatus(status);
     }
 }

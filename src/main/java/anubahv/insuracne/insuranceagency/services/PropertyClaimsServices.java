@@ -13,4 +13,6 @@ public interface PropertyClaimsServices {
     List<PropertyClaim> allActiveOfUser(int userId);
 
     List<PropertyClaim> allProcessedOfUser(int userId);
+
+    List<PropertyClaim> getClaimsByStatus(String active);
 }

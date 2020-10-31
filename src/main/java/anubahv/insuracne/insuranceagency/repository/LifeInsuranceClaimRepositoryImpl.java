@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 
 @Repository
@@ -59,5 +60,12 @@ public class LifeInsuranceClaimRepositoryImpl implements LifeInsuranceClaimsRepo
     public String findDocuments(int id) {
         String sqlQuery = "select death_certificate from life_insurance_claims where id = '"+id+"'";
         return jdbcTemplate.queryForObject(sqlQuery,String.class);
+    }
+
+    @Override
+    public List<LifeInsuranceClaim> findAllByStatus(String status) {
+        String sqlQuery = "select * from life_insurance_claims where status='"+status+"'";
+        List<LifeInsuranceClaim> lifeInsuranceClaims = jdbcTemplate.query(sqlQuery,lifeInsuranceClaimRowMapper);
+        return lifeInsuranceClaims;
     }
 }

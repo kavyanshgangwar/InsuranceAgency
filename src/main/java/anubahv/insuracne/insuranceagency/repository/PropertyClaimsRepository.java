@@ -12,4 +12,6 @@ public interface PropertyClaimsRepository {
     public void delete(int id);
 
     List<PropertyClaim> findAllOfUserByStatus(int userId, String status);
+
+    List<PropertyClaim> findAllByStatus(String status);
 }

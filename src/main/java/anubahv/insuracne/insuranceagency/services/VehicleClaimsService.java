@@ -13,4 +13,6 @@ public interface VehicleClaimsService {
     List<VehicleClaims> allActiveOfUser(int userId);
 
     List<VehicleClaims> allProcessedOfUser(int userId);
+
+    List<VehicleClaims> getClaimsByStatus(String status);
 }

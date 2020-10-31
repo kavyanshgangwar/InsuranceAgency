@@ -13,4 +13,6 @@ public interface HealthClaimServices {
     public List<HealthClaim> allActiveOfUser(int userId);
 
     List<HealthClaim> allProcessedOfUser(int userId);
+
+    List<HealthClaim> getClaimsByStatus(String active);
 }

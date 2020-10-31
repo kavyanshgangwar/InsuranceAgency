@@ -47,6 +47,11 @@ public class HealthClaimServicesImpl implements HealthClaimServices {
     }
 
     @Override
+    public List<HealthClaim> getClaimsByStatus(String active) {
+        return healthClaimRepository.findAllByStatus("active");
+    }
+
+    @Override
     public List<HealthClaim> allActiveOfUser(int userId) {
         return healthClaimRepository.findAllOfUserByStatus(userId,"active");
     }
