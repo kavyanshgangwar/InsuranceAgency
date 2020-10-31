@@ -37,6 +37,10 @@ public class LoginController {
             securityService.notVerified();
             return "forward:/homepage";
         }
+        String[] roles = user.getRole().split(" ");
+        for(int i=0;i< roles.length;i++){
+            if(roles[i].equals("admin"))return "redirect:/admin";
+        }
         model.addAttribute("username",securityService.findLoggedInUsername());
         return "redirect:/self";
     }
