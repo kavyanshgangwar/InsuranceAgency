@@ -54,7 +54,7 @@ public class PolicyRecordRepositoryImpl implements PolicyRecordRepository {
 
     @Override
     public PolicyRecord getPolicyRecord(int userId, int policyId) {
-        String sqlQuery = "select * from policy_record where user_id = '"+userId+"' and policy = '"+policyId+"'";
+        String sqlQuery = "select * from policy_record where user_id = '"+userId+"' and policy = '"+policyId+"' and id=(select max(id) from policy_record where user_id = '"+userId+"' and policy='"+policyId+"') ";
         return jdbcTemplate.queryForObject(sqlQuery,policyRecordRowMapper);
     }
 
