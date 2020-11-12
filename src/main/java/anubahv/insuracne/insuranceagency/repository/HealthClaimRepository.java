@@ -11,6 +11,5 @@ public interface HealthClaimRepository {
     public List<String> getRelatedDocuments(int id);
     public void delete(int id);
     public List<HealthClaim> findAllOfUserByStatus(int userId,String status);
-
     List<HealthClaim> findAllByStatus(String active);
 }

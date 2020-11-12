@@ -12,4 +12,5 @@ public interface PolicyRepository {
     public Policy findById(int policyId);
     public void changeExpirationStatus(String expirationStatus,int policyId);
     public void addPolicy(Policy policy);
+
 }

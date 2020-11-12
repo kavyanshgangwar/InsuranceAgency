@@ -85,4 +85,10 @@ public class PropertyRepositoryImpl implements PropertyRepository {
         String sqlQuery = "delete from property where id ='"+id+"'";
         jdbcTemplate.update(sqlQuery);
     }
+
+    @Override
+    public void removeRecord(int propertyId) {
+        String sqlQuery = "update property set record_id=NULL where id='"+propertyId+"'";
+        jdbcTemplate.update(sqlQuery);
+    }
 }

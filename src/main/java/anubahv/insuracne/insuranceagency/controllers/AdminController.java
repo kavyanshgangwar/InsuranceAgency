@@ -1,7 +1,6 @@
 package anubahv.insuracne.insuranceagency.controllers;
 
-import anubahv.insuracne.insuranceagency.models.Policy;
-import anubahv.insuracne.insuranceagency.models.User;
+import anubahv.insuracne.insuranceagency.models.*;
 import anubahv.insuracne.insuranceagency.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,24 +13,29 @@ import java.util.List;
 @Controller
 public class AdminController {
     PolicyService policyService;
+    PolicyRecordService policyRecordService;
+    UserService userService;
     SecurityService securityService;
     HealthClaimServices healthClaimServices;
     VehicleClaimsService vehicleClaimsService;
     PropertyClaimsServices propertyClaimsServices;
     LifeInsuranceClaimService lifeInsuranceClaimService;
+    VehicleService vehicleService;
+    PropertyService propertyService;
 
     @Autowired
-    public AdminController(PolicyService policyService, SecurityService securityService, HealthClaimServices healthClaimServices, VehicleClaimsService vehicleClaimsService, PropertyClaimsServices propertyClaimsServices, LifeInsuranceClaimService lifeInsuranceClaimService) {
+    public AdminController(PolicyService policyService, PolicyRecordService policyRecordService, UserService userService, SecurityService securityService, HealthClaimServices healthClaimServices, VehicleClaimsService vehicleClaimsService, PropertyClaimsServices propertyClaimsServices, LifeInsuranceClaimService lifeInsuranceClaimService, VehicleService vehicleService, PropertyService propertyService) {
         this.policyService = policyService;
+        this.policyRecordService = policyRecordService;
+        this.userService = userService;
         this.securityService = securityService;
         this.healthClaimServices = healthClaimServices;
         this.vehicleClaimsService = vehicleClaimsService;
         this.propertyClaimsServices = propertyClaimsServices;
         this.lifeInsuranceClaimService = lifeInsuranceClaimService;
+        this.vehicleService = vehicleService;
+        this.propertyService = propertyService;
     }
-
-
-
 
     @RequestMapping({"","/"})
     public String adminHome(){
@@ -75,4 +79,53 @@ public class AdminController {
         model.addAttribute("lifeClaims",lifeInsuranceClaimService.getClaimsByStatus("active"));
         return "admin/claims";
     }
+
+    @GetMapping("/claims/health/{id}/accept")
+    public String acceptHealthClaim(@PathVariable("id")int id){
+        String loggedInUserName = securityService.findLoggedInUsername();
+        if(loggedInUserName==null){
+            return "redirect:/login";
+        }
+        healthClaimServices.changeStatus("processed",id);
+        return "redirect:/admin/claims";
+    }
+
+    @GetMapping("/claims/vehicle/{id}/accept")
+    public String acceptVehicleClaim(@PathVariable("id")int id){
+        String loggedInUserName = securityService.findLoggedInUsername();
+        if(loggedInUserName==null){
+            return "redirect:/login";
+        }
+        vehicleClaimsService.changeStatus("processed",id);
+        VehicleClaims vehicleClaims = vehicleClaimsService.getClaim(id);
+        vehicleService.removeRecord(vehicleClaims.getVehicleId());
+        return "redirect:/admin/claims";
+    }
+
+    @GetMapping("/claims/property/{id}/accept")
+    public String acceptPropertyClaim(@PathVariable("id")int id){
+        String loggedInUserName = securityService.findLoggedInUsername();
+        if(loggedInUserName==null){
+            return "redirect:/login";
+        }
+        propertyClaimsServices.changeStatus("processed",id);
+        PropertyClaim propertyClaim = propertyClaimsServices.getClaim(id);
+        propertyService.removeRecord(propertyClaim.getPropertyId());
+        return "redirect:/admin/claims";
+    }
+
+    @GetMapping("/claims/life/{id}/accept")
+    public String acceptLifeClaim(@PathVariable("id")int id){
+        String loggedInUserName = securityService.findLoggedInUsername();
+        if(loggedInUserName==null){
+            return "redirect:/login";
+        }
+        lifeInsuranceClaimService.updateStatus("processed",id);
+        LifeInsuranceClaim lifeInsuranceClaim = lifeInsuranceClaimService.get(id);
+        PolicyRecord policyRecord = policyRecordService.getPolicyRecord(lifeInsuranceClaim.getRecordId());
+        userService.deadUser(policyRecord.getUserId());
+        return "redirect:/admin/claims";
+    }
+
+
 }

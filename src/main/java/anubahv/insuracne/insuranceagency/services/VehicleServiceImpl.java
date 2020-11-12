@@ -58,6 +58,11 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
+    public void removeRecord(int id) {
+        vehicleRepository.removeRecord(id);
+    }
+
+    @Override
     public List<Vehicle> getVehicleForBuyingPolicy(int userId) {
         return vehicleRepository.findByUserAndRecord(userId, 0);
     }

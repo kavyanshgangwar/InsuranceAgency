@@ -89,4 +89,10 @@ public class VehicleRepositoryImpl implements VehicleRepository {
         String sqlQuery = "delete from vehicle where id='"+id+"'";
         jdbcTemplate.update(sqlQuery);
     }
+
+    @Override
+    public void removeRecord(int id) {
+        String sqlQuery = "update vehicle set record_id=NULL where id='"+id+"'";
+        jdbcTemplate.update(sqlQuery);
+    }
 }

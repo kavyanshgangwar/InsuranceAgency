@@ -64,4 +64,9 @@ public class UserServiceImpl implements UserService {
     public void assignRoleEmployee(String email) {
         userRepository.addRole("employee",email);
     }
+
+    @Override
+    public void deadUser(int userId) {
+        userRepository.deadUser(userId);
+    }
 }

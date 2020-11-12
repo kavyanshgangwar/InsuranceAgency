@@ -13,4 +13,6 @@ public interface PropertyRepository {
     public void save(Property property);
     public void changeRecord(int recordId,int id);
     public void delete(int id);
+
+    void removeRecord(int propertyId);
 }

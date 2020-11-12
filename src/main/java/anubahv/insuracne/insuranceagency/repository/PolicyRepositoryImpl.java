@@ -77,4 +77,6 @@ public class PolicyRepositoryImpl implements PolicyRepository {
         String sqlQuery = "insert into policy(name,category,premium,max_claim_amount,things_covered,expiration_status) values(?,?,?,?,?,?)";
         jdbcTemplate.update(sqlQuery,policy.getName(),policy.getCategory(),policy.getPremium(),policy.getMaxClaimAmount(),policy.getThingsCovered(),policy.getExpirationStatus());
     }
+
+
 }

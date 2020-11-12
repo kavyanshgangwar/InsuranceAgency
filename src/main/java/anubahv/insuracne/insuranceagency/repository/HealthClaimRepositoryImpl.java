@@ -115,4 +115,6 @@ public class HealthClaimRepositoryImpl implements HealthClaimRepository {
         jdbcTemplate.update(sqlQueryForDocs);
         jdbcTemplate.update(sqlQuery);
     }
+
+
 }

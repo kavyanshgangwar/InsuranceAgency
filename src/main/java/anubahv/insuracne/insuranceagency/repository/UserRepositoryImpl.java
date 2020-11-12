@@ -29,6 +29,12 @@ public class UserRepositoryImpl implements UserRepository {
         }
     };
 
+    @Override
+    public void deadUser(int userId) {
+        String sqlQuery = "update user set status='dead' where id='"+userId+"'";
+        jdbcTemplate.update(sqlQuery);
+    }
+
     @Autowired
     public UserRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;

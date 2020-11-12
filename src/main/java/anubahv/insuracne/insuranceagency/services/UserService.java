@@ -12,4 +12,6 @@ public interface UserService {
     public VerificationToken getVerificationToken(String token);
     public User findByUserId(int id);
     public void assignRoleEmployee(String email);
+
+    void deadUser(int userId);
 }

@@ -10,4 +10,6 @@ public interface UserRepository {
     public void enableUser(User user);
     public User findByUserId(int id);
     public void addRole(String role,String email);
+
+    void deadUser(int userId);
 }

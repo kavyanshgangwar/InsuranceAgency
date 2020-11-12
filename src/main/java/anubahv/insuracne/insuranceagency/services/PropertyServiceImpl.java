@@ -60,4 +60,9 @@ public class PropertyServiceImpl implements PropertyService {
     public void delete(int id) {
         propertyRepository.delete(id);
     }
+
+    @Override
+    public void removeRecord(int propertyId) {
+        propertyRepository.removeRecord(propertyId);
+    }
 }

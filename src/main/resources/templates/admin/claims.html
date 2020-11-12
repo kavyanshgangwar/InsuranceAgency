@@ -8,21 +8,29 @@
 <ul>
     <li th:each="claim: ${healthClaims}">
         <p th:text="${claim.getRecordId()}"></p>
+        <a th:href="@{/admin/claims/health/{id}/accept(id=${claim.getId()})}">accept</a>
+        <a th:href="@{/admin/claims/health/{id}/reject(id=${claim.getId()})}">reject</a>
     </li>
 </ul>
 <ul>
     <li th:each="claim: ${vehicleClaims}">
         <p th:text="${claim.getRecordId()}"></p>
+        <a th:href="@{/admin/claims/vehicle/{id}/accept(id=${claim.getId()})}">accept</a>
+        <a th:href="@{/admin/claims/vehicle/{id}/reject(id=${claim.getId()})}">reject</a>
     </li>
 </ul>
 <ul>
     <li th:each="claim: ${propertyClaims}">
         <p th:text="${claim.getRecordId()}"></p>
+        <a th:href="@{/admin/claims/property/{id}/accept(id=${claim.getId()})}">accept</a>
+        <a th:href="@{/admin/claims/property/{id}/reject(id=${claim.getId()})}">reject</a>
     </li>
 </ul>
 <ul>
     <li th:each="claim: ${lifeClaims}">
         <p th:text="${claim.getRecordId()}"></p>
+        <a th:href="@{/admin/claims/life/{id}/accept(id=${claim.getId()})}">accept</a>
+        <a th:href="@{/admin/claims/life/{id}/reject(id=${claim.getId()})}">reject</a>
     </li>
 </ul>
 </body>
