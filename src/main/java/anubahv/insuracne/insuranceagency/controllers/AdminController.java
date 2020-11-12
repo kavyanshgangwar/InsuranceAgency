@@ -127,5 +127,47 @@ public class AdminController {
         return "redirect:/admin/claims";
     }
 
+    @GetMapping("/claims/health/{id}/reject")
+    public String rejectHealthClaim(@PathVariable("id")int id){
+        String loggedInUserName = securityService.findLoggedInUsername();
+        if(loggedInUserName==null){
+            return "redirect:/login";
+        }
+        healthClaimServices.changeStatus("rejected",id);
+        return "redirect:/admin/claims";
+    }
 
+    @GetMapping("/claims/life/{id}/reject")
+    public String rejectLifeClaim(@PathVariable("id")int id){
+        String loggedInUserName = securityService.findLoggedInUsername();
+        if(loggedInUserName==null){
+            return "redirect:/login";
+        }
+        lifeInsuranceClaimService.updateStatus("rejected",id);
+        return "redirect:/admin/claims";
+    }
+
+    @GetMapping("/claims/vehicle/{id}/reject")
+    public String rejectVehicleClaim(@PathVariable("id")int id){
+        String loggedInUserName = securityService.findLoggedInUsername();
+        if(loggedInUserName==null){
+            return "redirect:/login";
+        }
+        vehicleClaimsService.changeStatus("rejected",id);
+        VehicleClaims vehicleClaims = vehicleClaimsService.getClaim(id);
+        vehicleService.removeRecord(vehicleClaims.getVehicleId());
+        return "redirect:/admin/claims";
+    }
+
+    @GetMapping("/claims/property/{id}/reject")
+    public String rejectPropertyClaim(@PathVariable("id")int id){
+        String loggedInUserName = securityService.findLoggedInUsername();
+        if(loggedInUserName==null){
+            return "redirect:/login";
+        }
+        propertyClaimsServices.changeStatus("rejected",id);
+        PropertyClaim propertyClaim = propertyClaimsServices.getClaim(id);
+        propertyService.removeRecord(propertyClaim.getPropertyId());
+        return "redirect:/admin/claims";
+    }
 }
