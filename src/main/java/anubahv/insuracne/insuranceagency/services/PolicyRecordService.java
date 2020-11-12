@@ -20,4 +20,6 @@ public interface PolicyRecordService {
     public void deleteRecord(int id);
 
     Map<PolicyRecord,String> getActiveOfUserWithCategory(int Userid);
+
+    void markExpiration();
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -83,6 +84,12 @@ public class PropertyRepositoryImpl implements PropertyRepository {
     @Override
     public void delete(int id) {
         String sqlQuery = "delete from property where id ='"+id+"'";
+        jdbcTemplate.update(sqlQuery);
+    }
+
+    @Override
+    public void removeExpirationRecord() {
+        String sqlQuery = "update property set record_id=NULL where record_id in (select id from policy_record where status='expired')";
         jdbcTemplate.update(sqlQuery);
     }
 

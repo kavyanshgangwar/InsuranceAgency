@@ -7,6 +7,8 @@ import anubahv.insuracne.insuranceagency.repository.PropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -59,6 +61,11 @@ public class PropertyServiceImpl implements PropertyService {
     @Override
     public void delete(int id) {
         propertyRepository.delete(id);
+    }
+
+    @Override
+    public void removeExpirationRecord() {
+        propertyRepository.removeExpirationRecord();
     }
 
     @Override

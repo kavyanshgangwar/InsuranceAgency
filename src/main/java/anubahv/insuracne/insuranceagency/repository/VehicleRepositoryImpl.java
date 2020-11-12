@@ -79,6 +79,12 @@ public class VehicleRepositoryImpl implements VehicleRepository {
     }
 
     @Override
+    public void removeExpirationRecord() {
+        String sqlQuery = "update vehicle set record_id=NULL where record_id in (select id from policy_record where status='expired')";
+        jdbcTemplate.update(sqlQuery);
+    }
+
+    @Override
     public void changeRecord(int recordId, int id) {
         String sqlQuery = "update vehicle set record_id='"+recordId+"' where id='"+id+"'";
         jdbcTemplate.update(sqlQuery);

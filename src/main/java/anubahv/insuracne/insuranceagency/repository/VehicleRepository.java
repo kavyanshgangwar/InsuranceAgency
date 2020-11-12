@@ -16,4 +16,6 @@ public interface VehicleRepository {
     public void delete(int id);
     void removeRecord(int id);
     public Vehicle findByRecord(int recordId);
+
+    void removeExpirationRecord();
 }

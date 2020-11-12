@@ -1,13 +1,18 @@
 package anubahv.insuracne.insuranceagency.repository;
 
+import anubahv.insuracne.insuranceagency.models.PolicyRecord;
 import anubahv.insuracne.insuranceagency.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.*;
+
+import static org.springframework.data.util.Pair.of;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
@@ -28,6 +33,20 @@ public class UserRepositoryImpl implements UserRepository {
             return user;
         }
     };
+
+    @Override
+    public List<Pair<String, Integer>> getExpiryMailDetails() {
+        Date date = Calendar.getInstance().getTime();
+        String sqlQuery = "select email,p.id from user, policy_record p where user.id = p.user_id and p.expiry_date = '"+new java.sql.Date(date.getTime())+"'";
+        List< Pair<String,Integer> > mailDetails = jdbcTemplate.query(sqlQuery, new RowMapper<Pair<String, Integer>>() {
+            @Override
+            public Pair<String, Integer> mapRow(ResultSet resultSet, int i) throws SQLException {
+                Pair<String, Integer> pair = of(resultSet.getString("email"),resultSet.getInt("p.id"));
+                return pair;
+            }
+        });
+        return mailDetails;
+    }
 
     @Override
     public void deadUser(int userId) {
@@ -79,5 +98,6 @@ public class UserRepositoryImpl implements UserRepository {
     public void addRole(String role, String email) {
         User user = findByEmail(email);
         String sqlQuery = "update user set role = '"+role+" "+user.getRole()+"' where email='"+email+"'";
+        jdbcTemplate.update(sqlQuery);
     }
 }

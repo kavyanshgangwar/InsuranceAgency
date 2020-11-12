@@ -16,4 +16,6 @@ public interface PropertyService {
     public void delete(int id);
 
     void removeRecord(int propertyId);
+
+    void removeExpirationRecord();
 }

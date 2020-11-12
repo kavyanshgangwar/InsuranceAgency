@@ -5,10 +5,7 @@ import anubahv.insuracne.insuranceagency.repository.PolicyRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class PolicyRecordServiceImpl implements PolicyRecordService {
@@ -62,6 +59,12 @@ public class PolicyRecordServiceImpl implements PolicyRecordService {
     @Override
     public PolicyRecord getPolicyRecord(int id) {
         return policyRecordRepository.getPolicyRecord(id);
+    }
+
+    @Override
+    public void markExpiration() {
+        Date date = Calendar.getInstance().getTime();
+        policyRecordRepository.markExpiration(date);
     }
 
     @Override

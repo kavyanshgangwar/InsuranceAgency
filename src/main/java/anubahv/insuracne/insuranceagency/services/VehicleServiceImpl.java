@@ -58,6 +58,11 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
+    public void removeExpirationRecord() {
+        vehicleRepository.removeExpirationRecord();
+    }
+
+    @Override
     public void removeRecord(int id) {
         vehicleRepository.removeRecord(id);
     }

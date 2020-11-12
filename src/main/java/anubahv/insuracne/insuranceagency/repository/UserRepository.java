@@ -1,6 +1,9 @@
 package anubahv.insuracne.insuranceagency.repository;
 
 import anubahv.insuracne.insuranceagency.models.User;
+import org.springframework.data.util.Pair;
+
+import java.util.List;
 
 public interface UserRepository {
 
@@ -12,4 +15,6 @@ public interface UserRepository {
     public void addRole(String role,String email);
 
     void deadUser(int userId);
+
+    List<Pair<String, Integer>> getExpiryMailDetails();
 }

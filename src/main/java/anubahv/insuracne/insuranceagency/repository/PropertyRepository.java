@@ -2,6 +2,7 @@ package anubahv.insuracne.insuranceagency.repository;
 
 import anubahv.insuracne.insuranceagency.models.Property;
 
+import java.util.Date;
 import java.util.List;
 
 public interface PropertyRepository {
@@ -15,4 +16,6 @@ public interface PropertyRepository {
     public void delete(int id);
 
     void removeRecord(int propertyId);
+
+    void removeExpirationRecord();
 }
