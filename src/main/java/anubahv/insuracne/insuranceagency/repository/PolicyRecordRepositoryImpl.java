@@ -60,7 +60,7 @@ public class PolicyRecordRepositoryImpl implements PolicyRecordRepository {
 
     @Override
     public void markExpiration(Date date) {
-        String sqlQuery = "update policy_record set status='expired' where expiry_date='"+new java.sql.Date(date.getTime())+"'";
+        String sqlQuery = "update policy_record set status='expired' where expiry_date='"+new java.sql.Date(date.getTime())+"' and status='active'";
         jdbcTemplate.update(sqlQuery);
     }
 
