@@ -12,6 +12,22 @@ import java.sql.SQLException;
 @Repository
 public class UserRepositoryImpl implements UserRepository {
     JdbcTemplate jdbcTemplate;
+    private RowMapper<User> userRowMapper = new RowMapper<User>() {
+        @Override
+        public User mapRow(ResultSet resultSet, int i) throws SQLException {
+            User user = new User();
+            user.setId(resultSet.getInt("id"));
+            user.setFirstName(resultSet.getString("first_name"));
+            user.setLastName(resultSet.getString("last_name"));
+            user.setEmail(resultSet.getString("email"));
+            user.setPhoneNo(resultSet.getString("phone_no"));
+            user.setRole(resultSet.getString("role"));
+            user.setStatus(resultSet.getString("status"));
+            user.setPassword(resultSet.getString("password"));
+            user.setAddress(resultSet.getString("address"));
+            return user;
+        }
+    };
 
     @Autowired
     public UserRepositoryImpl(JdbcTemplate jdbcTemplate) {
@@ -21,21 +37,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User findByEmail(String email) {
         String query = "select * from user where email='"+email+"'";
-        return jdbcTemplate.queryForObject(query, new RowMapper<User>() {
-            @Override
-            public User mapRow(ResultSet resultSet, int i) throws SQLException {
-                User user = new User();
-                user.setId(resultSet.getInt("id"));
-                user.setFirstName(resultSet.getString("first_name"));
-                user.setLastName(resultSet.getString("last_name"));
-                user.setEmail(resultSet.getString("email"));
-                user.setPhoneNo(resultSet.getString("phone_no"));
-                user.setRole(resultSet.getString("role"));
-                user.setStatus(resultSet.getString("status"));
-                user.setPassword(resultSet.getString("password"));
-                return user;
-            }
-        });
+        return jdbcTemplate.queryForObject(query, userRowMapper);
     }
 
     @Override
@@ -64,21 +66,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User findByUserId(int id) {
         String query = "select * from user where id='"+id+"'";
-        return jdbcTemplate.queryForObject(query, new RowMapper<User>() {
-            @Override
-            public User mapRow(ResultSet resultSet, int i) throws SQLException {
-                User user = new User();
-                user.setId(resultSet.getInt("id"));
-                user.setFirstName(resultSet.getString("first_name"));
-                user.setLastName(resultSet.getString("last_name"));
-                user.setEmail(resultSet.getString("email"));
-                user.setPhoneNo(resultSet.getString("phone_no"));
-                user.setRole(resultSet.getString("role"));
-                user.setStatus(resultSet.getString("status"));
-                user.setPassword(resultSet.getString("password"));
-                return user;
-            }
-        });
+        return jdbcTemplate.queryForObject(query, userRowMapper);
     }
 
     @Override

@@ -7,6 +7,7 @@ create table user(
     password varchar(1000) NOT NULL,
     status varchar(14) NOT NULL,
     role varchar(100) NOT NULL,
+    address longtext NOT NULL,
     PRIMARY KEY (id)
 );
 

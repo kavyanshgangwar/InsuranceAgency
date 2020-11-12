@@ -10,5 +10,20 @@
         <p th:text="${claim.getRecordId()}"></p>
     </li>
 </ul>
+<ul>
+    <li th:each="claim: ${vehicleClaims}">
+        <p th:text="${claim.getRecordId()}"></p>
+    </li>
+</ul>
+<ul>
+    <li th:each="claim: ${propertyClaims}">
+        <p th:text="${claim.getRecordId()}"></p>
+    </li>
+</ul>
+<ul>
+    <li th:each="claim: ${lifeClaims}">
+        <p th:text="${claim.getRecordId()}"></p>
+    </li>
+</ul>
 </body>
 </html>
