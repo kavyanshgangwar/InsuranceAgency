@@ -35,7 +35,7 @@ public class LoginController {
         if(user.getStatus().equals("not-verified")) {
             model.addAttribute("verification",false);
             securityService.notVerified();
-            return "forward:/homepage";
+            return "redirect:/homepage";
         }
         if(user.getStatus().equals("dead")){
             securityService.notVerified();
