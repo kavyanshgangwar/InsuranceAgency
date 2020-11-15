@@ -3,10 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin</title>
+    <link th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/homepage.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/loginpage.css}">
 </head>
-<body>
-<h1><a th:href="@{/admin/policy/add}"> add policies</a></h1>
-<h1><a th:href="@{/admin/claims}"> verify claim</a></h1>
-<h1><a th:href="@{/admin/policy/change}"> expiry of policy</a></h1>
+<body class="quicksand text-center">
+<div class="form-div">
+    <div class="form-signin">
+        <h1><a style="text-decoration: none;" th:href="@{/admin/policy/add}" > <button class="btn btn-lg text-white bg-theme1 btn-block" type="submit">Add Policies</button></a></h1>
+        <h1><a style="text-decoration: none;" th:href="@{/admin/claims}"><button class="btn btn-lg text-white bg-theme1 btn-block" type="submit">Verify Claims</button></a></h1>
+        <h1><a style="text-decoration: none;" th:href="@{/admin/policy/change}"> <button class="btn btn-lg text-white bg-theme1 btn-block" type="submit">Expire a Policy</button></a></h1>
+
+    </div>
+
+</div>
+
+
+<!-- fontawesome script -->
+<script src="https://kit.fontawesome.com/1f4b1ad491.js" crossorigin="anonymous"></script>
+
+<!-- bootstrap script -->
+<script th:src="@{https://code.jquery.com/jquery-3.2.1.slim.min.js}"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js}"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js}"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 </body>
 </html>
