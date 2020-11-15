@@ -37,6 +37,10 @@ public class LoginController {
             securityService.notVerified();
             return "forward:/homepage";
         }
+        if(user.getStatus().equals("dead")){
+            securityService.notVerified();
+            return "redirect:/homepage";
+        }
         String[] roles = user.getRole().split(" ");
         for(int i=0;i< roles.length;i++){
             if(roles[i].equals("admin"))return "redirect:/admin";
