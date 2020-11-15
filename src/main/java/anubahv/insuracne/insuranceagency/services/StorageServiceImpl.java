@@ -13,18 +13,17 @@ import java.nio.file.StandardCopyOption;
 
 @Service
 public class StorageServiceImpl implements StorageService{
-    @Value("${app.upload.dir:${user.home}}")
-    public String uploadDir;
+    public String uploadDir = "src/main/resources/public/uploads/";
 
     @Override
     public String getUploadLocation(MultipartFile file, String username, String type) {
-        return "Desktop/dbms/project/InsuranceAgency/files/"+username+"/"+type+"/"+StringUtils.cleanPath(file.getOriginalFilename());
+        return uploadDir+username+"/"+type+"/"+StringUtils.cleanPath(file.getOriginalFilename());
     }
 
     @Override
     public void uploadFile(MultipartFile file,String username,String type) {
         try{
-            Path copyLocation = Paths.get("Desktop/dbms/project/InsuranceAgency/files/"+username+"/"+type+ File.separator + StringUtils.cleanPath(file.getOriginalFilename()));
+            Path copyLocation = Paths.get(uploadDir+username+"/"+type+ File.separator + StringUtils.cleanPath(file.getOriginalFilename()));
             if(Files.notExists(copyLocation)){
                 Files.createDirectories(copyLocation);
             }
