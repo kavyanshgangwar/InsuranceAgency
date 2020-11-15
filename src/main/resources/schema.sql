@@ -54,7 +54,7 @@ create table policy_record(
 create table vehicle(
     id int NOT NULL AUTO_INCREMENT,
     vehicle_number varchar(12) NOT NULL,
-    document varchar(100) NOT NULL,
+    document varchar(2000) NOT NULL,
     record_id int,
     user int NOT NULL,
     PRIMARY KEY (id),
@@ -67,7 +67,7 @@ create table property(
     name varchar(20) NOT NULL,
     record_id int,
     user int NOT NULL,
-    document varchar(100) NOT NULL,
+    document varchar(2000) NOT NULL,
     primary key (id),
     foreign key (user) references user(id),
     foreign key (record_id) references policy_record(id)
@@ -100,7 +100,7 @@ create table vehicle_claims(
 
 create table vehicle_claim_docs(
     id int NOT NULL AUTO_INCREMENT,
-    document varchar(100) NOT NULL,
+    document varchar(2000) NOT NULL,
     vehicle_claim_id int NOT NULL,
     PRIMARY KEY (id),
     foreign key (vehicle_claim_id) references vehicle_claims(id)
@@ -119,7 +119,7 @@ create table health_claims(
 
 create table health_claim_docs(
    id int NOT NULL AUTO_INCREMENT,
-   document varchar(100) NOT NULL,
+   document varchar(2000) NOT NULL,
    health_claim_id int NOT NULL,
    PRIMARY KEY (id),
    foreign key (health_claim_id) references health_claims(id)
@@ -140,7 +140,7 @@ create table property_claims(
 
 create table property_claim_docs(
     id int NOT NULL AUTO_INCREMENT,
-    document varchar(100) NOT NULL,
+    document varchar(2000) NOT NULL,
     property_claim_id int NOT NULL,
     PRIMARY KEY (id),
     foreign key (property_claim_id) references property_claims(id)
@@ -148,7 +148,7 @@ create table property_claim_docs(
 
 create table life_insurance_claims(
     id int NOT NULL AUTO_INCREMENT,
-    death_certificate varchar(200) NOT NULL,
+    death_certificate varchar(2000) NOT NULL,
     record_id int NOT NULL,
     amount int NOT NULL,
     status varchar(20) NOT NULL,

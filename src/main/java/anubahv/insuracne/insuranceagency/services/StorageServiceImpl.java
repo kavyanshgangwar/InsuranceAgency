@@ -22,14 +22,14 @@ public class StorageServiceImpl implements StorageService{
 
     @Override
     public void uploadFile(MultipartFile file,String username,String type) {
-//        try{
-//            Path copyLocation = Paths.get(uploadDir+username+"/"+type+ File.separator + StringUtils.cleanPath(file.getOriginalFilename()));
-//            if(Files.notExists(copyLocation)){
-//                Files.createDirectories(copyLocation);
-//            }
-//            Files.copy(file.getInputStream(),copyLocation, StandardCopyOption.REPLACE_EXISTING);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
+        try{
+            Path copyLocation = Paths.get(uploadDir+username+"/"+type+ File.separator + StringUtils.cleanPath(file.getOriginalFilename()));
+            if(Files.notExists(copyLocation)){
+                Files.createDirectories(copyLocation);
+            }
+            Files.copy(file.getInputStream(),copyLocation, StandardCopyOption.REPLACE_EXISTING);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
