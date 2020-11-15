@@ -58,7 +58,7 @@ public class RegistrationController {
         }catch (Exception re) {
             re.printStackTrace();
         }
-        return "redirect:/homepage";
+        return "verification";
     }
 
     @GetMapping("/confirmRegistration")
