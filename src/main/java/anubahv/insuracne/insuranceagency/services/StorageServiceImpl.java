@@ -18,13 +18,13 @@ public class StorageServiceImpl implements StorageService{
 
     @Override
     public String getUploadLocation(MultipartFile file, String username, String type) {
-        return uploadDir+"/Desktop/dbms/project/InsuranceAgency/files/"+username+"/"+type+"/"+StringUtils.cleanPath(file.getOriginalFilename());
+        return "Desktop/dbms/project/InsuranceAgency/files/"+username+"/"+type+"/"+StringUtils.cleanPath(file.getOriginalFilename());
     }
 
     @Override
     public void uploadFile(MultipartFile file,String username,String type) {
         try{
-            Path copyLocation = Paths.get(uploadDir+"/Desktop/dbms/project/InsuranceAgency/files/"+username+"/"+type+ File.separator + StringUtils.cleanPath(file.getOriginalFilename()));
+            Path copyLocation = Paths.get("Desktop/dbms/project/InsuranceAgency/files/"+username+"/"+type+ File.separator + StringUtils.cleanPath(file.getOriginalFilename()));
             if(Files.notExists(copyLocation)){
                 Files.createDirectories(copyLocation);
             }
