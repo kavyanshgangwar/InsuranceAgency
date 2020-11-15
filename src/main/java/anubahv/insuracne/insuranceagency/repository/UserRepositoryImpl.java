@@ -78,8 +78,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void save(User user) {
-        String query = "insert into user(first_name,last_name,email,phone_no,password,status,role) values(?,?,?,?,?,?,?)";
-        jdbcTemplate.update(query,user.getFirstName(),user.getLastName(),user.getEmail(),user.getPhoneNo(),user.getPassword(),user.getStatus(),user.getRole());
+        String query = "insert into user(first_name,last_name,email,phone_no,password,status,role,address) values(?,?,?,?,?,?,?,?)";
+        jdbcTemplate.update(query,user.getFirstName(),user.getLastName(),user.getEmail(),user.getPhoneNo(),user.getPassword(),user.getStatus(),user.getRole(),user.getAddress());
     }
 
     @Override
