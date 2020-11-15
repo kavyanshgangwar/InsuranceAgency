@@ -10,6 +10,23 @@
     <link rel="stylesheet" th:href="@{/css/loginpage.css}">
 </head>
 <body class="quicksand text-center">
+<nav th:fragment="navbar" class="navbar sticky-top navbar-expand-lg navbar-dark bg-theme1">
+    <a th:href="@{/}" class="ml-2 pr-2 mr-4 quicksand navbar-brand font-weight-bold font-size-2">AiA</a>
+    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" area-expanded="false" aria-label="Toggle navigation" name="button">
+        <i class="fas fa-bars navbar-hamburger-icon"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarContent">
+        <ul class="navbar-nav mr-auto ml-2">
+            <li class="nav-item active  mr-3">
+                <a class="nav-link quicksand font-weight-bold text-white" th:href="@{/}">Home</a>
+            </li>
+            <li class="nav-item mr-3">
+                <a class="nav-link quicksand font-weight-bold text-white" th:href="@{/admin}">Admin Home</a>
+            </li>
+
+        </ul>
+    </div>
+</nav>
 <div class="form-div">
     <div class="form-signin">
         <h1><a style="text-decoration: none;" th:href="@{/admin/policy/add}" > <button class="btn btn-lg text-white bg-theme1 btn-block" type="submit">Add Policies</button></a></h1>

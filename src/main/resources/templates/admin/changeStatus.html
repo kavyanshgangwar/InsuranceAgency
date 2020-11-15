@@ -10,6 +10,8 @@
     <link rel="stylesheet" th:href="@{/css/loginpage.css}">
 </head>
 <body class="quicksand text-center">
+
+<div th:insert="admin/adminHome::navbar"></div>
 <div class="form-div">
     <form class="form-signin" method="post" th:action="@{/admin/policy/change}">
         <select class="custom-select" name="id">
